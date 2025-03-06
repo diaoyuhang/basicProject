@@ -3,10 +3,19 @@ package com.example.basicproject.dto;
 public class Pagination<T> {
 
     private T record;
-    private Integer total;
+    private Long total;
     private Integer pageSize;
     private Integer currentPage;
 
+    public static <E> Pagination<E> create(Long total,Integer pageSize,Integer currentPage,E record){
+        Pagination<E> pagination = new Pagination<>();
+        pagination.setPageSize(pageSize);
+        pagination.setTotal(total);
+        pagination.setCurrentPage(currentPage);
+        pagination.setRecord(record);
+
+        return pagination;
+    }
     public T getRecord() {
         return record;
     }
@@ -15,11 +24,11 @@ public class Pagination<T> {
         this.record = record;
     }
 
-    public Integer getTotal() {
+    public Long getTotal() {
         return total;
     }
 
-    public void setTotal(Integer total) {
+    public void setTotal(Long total) {
         this.total = total;
     }
 

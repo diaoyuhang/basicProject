@@ -39,7 +39,7 @@ CREATE TABLE department
     creator         varchar(32) not null comment '创建人',
     editor          varchar(32) not null comment '修改人',
     rec_time        timestamp   not null DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '时间戳',
-    INDEX department_parent_id (parent_id)
+    INDEX           department_parent_id (parent_id)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 comment ='部门';
 
@@ -73,7 +73,7 @@ CREATE TABLE video
     editor_id   BIGINT       NOT NULL comment '修改人用户id',
     creator     varchar(32)  not null comment '创建人',
     editor      varchar(32)  not null comment '修改人',
-    rec_time    timestamp    not null DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '时间戳',
+    rec_time    timestamp    not null DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '时间戳'
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 comment ='视频';
 
@@ -88,7 +88,7 @@ CREATE TABLE role
     editor_id   BIGINT      NOT NULL comment '修改人用户id',
     creator     varchar(32) not null comment '创建人',
     editor      varchar(32) not null comment '修改人',
-    rec_time    timestamp   not null DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '时间戳',
+    rec_time    timestamp   not null DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '时间戳'
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 comment ='角色';
 
@@ -103,7 +103,7 @@ CREATE TABLE use_role
     editor_id   BIGINT      NOT NULL comment '修改人用户id',
     creator     varchar(32) not null comment '创建人',
     editor      varchar(32) not null comment '修改人',
-    rec_time    timestamp   not null DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '时间戳',
+    rec_time    timestamp   not null DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '时间戳'
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 comment ='用户角色关联表';
 
@@ -148,7 +148,7 @@ CREATE TABLE role_permission
 CREATE TABLE user_permission
 (
     id            BIGINT PRIMARY KEY comment '主键',
-    user_id       BIGINT      NOT NULL comment '角色id',
+    user_id       BIGINT      NOT NULL comment '用户id',
     permission_id BIGINT      NOT NULL comment '权限id',
     create_time   datetime    not null comment '创建时间',
     edit_time     datetime    not null comment '编辑时间',
@@ -157,7 +157,7 @@ CREATE TABLE user_permission
     creator       varchar(32) not null comment '创建人',
     editor        varchar(32) not null comment '修改人',
     rec_time      timestamp   not null DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '时间戳',
-    INDEX         permission_role_id (role_id),
+    INDEX         permission_role_id (user_id),
     INDEX         permission_permission_id (permission_id)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 comment ='用户权限关联表';

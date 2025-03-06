@@ -1,7 +1,7 @@
 package com.example.basicproject.utils;
 
 import com.alibaba.fastjson2.JSONObject;
-import dao.domain.User;
+import com.example.basicproject.dao.domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
