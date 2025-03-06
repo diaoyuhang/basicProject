@@ -9,6 +9,7 @@ import com.example.basicproject.dto.user.UserResDto;
 import com.example.basicproject.service.UserService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,15 +31,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Pagination<List<UserResDto>> getUserList(PageReqCondition<UserReqDto> pageReqCondition) {
-        PageHelper.startPage(pageReqCondition.getPageNum(), pageReqCondition.getPageSize());
+        Page<Object> page = PageHelper.startPage(pageReqCondition.getPageNum(), pageReqCondition.getPageSize());
         UserReqDto condition = pageReqCondition.getCondition();
         if (condition==null){
             condition = new UserReqDto();
         }
         List<User> userList = userDao.selectByUser(condition.convertUser());
+//        PageInfo<User> pageInfo = new PageInfo<>(userList);
+
         List<UserResDto> res = userList.stream().map(UserResDto::create).collect(Collectors.toList());
 
-        return Pagination.create(0L,pageReqCondition.getPageSize(),pageReqCondition.getPageNum(),res);
+        return Pagination.create(page.getTotal(), pageReqCondition.getPageSize(),pageReqCondition.getPageNum(),res);
     }
 
     @Override
