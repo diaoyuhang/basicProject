@@ -1,0 +1,21 @@
+server:
+  servlet:
+    context-path: /bp
+spring:
+  application:
+    name: api-bridge
+  datasource:
+    url: jdbc:mysql://47.102.215.110:22698/basic?useSSL=false&autoReconnect=true&characterEncoding=utf8&allowPublicKeyRetrieval=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: a12345
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      pool-name: hikari
+      minimum-idle: 5
+      idle-timeout: 600000
+      maximum-pool-size: 10
+      auto-commit: true
+      max-lifetime: 1800000
+      connection-timeout: 60000
+      connection-test-query: SELECT 1
