@@ -7,6 +7,9 @@ import java.util.Date;
  * @author 
  */
 public class User{
+
+    public static final Integer OPEN_STATUS = 1;
+    public static final Integer STOP_STATUS = 0 ;
     /**
      * 主键
      */

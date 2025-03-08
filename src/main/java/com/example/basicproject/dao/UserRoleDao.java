@@ -3,6 +3,8 @@ package com.example.basicproject.dao;
 import com.example.basicproject.dao.domain.UserRole;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface UserRoleDao {
     int deleteByPrimaryKey(Long id);
@@ -16,4 +18,12 @@ public interface UserRoleDao {
     int updateByPrimaryKeySelective(UserRole record);
 
     int updateByPrimaryKey(UserRole record);
+
+    void deleteByUserId(Long userId);
+
+    List<UserRole> selectByUserId(Long userId);
+
+    void batchInsert(List<UserRole> userRoles);
+
+    void deleteByPrimaryKeys(List<Long> ids);
 }

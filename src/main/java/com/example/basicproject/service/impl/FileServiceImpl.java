@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -34,6 +35,7 @@ public class FileServiceImpl implements FileService {
 
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public String uploadImg(MultipartFile file) throws IOException {
         byte[] content = file.getBytes();
         String md5 = MD5Util.getImageHash(file.getInputStream());

@@ -13,8 +13,7 @@
     <result column="editor" jdbcType="VARCHAR" property="editor" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, role_id, user_id, create_time, edit_time, creator_id, editor_id, creator, editor, 
-    rec_time
+    id, role_id, user_id, create_time, edit_time, creator_id, editor_id, creator, editor
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -22,10 +21,32 @@
     from user_role
     where id = #{id,jdbcType=BIGINT}
   </select>
+
+  <select id="selectByUserId" resultType="com.example.basicproject.dao.domain.UserRole">
+    select * from
+                 user_role
+     where user_id = #{userId,jdbcType=BIGINT}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from user_role
     where id = #{id,jdbcType=BIGINT}
   </delete>
+
+    <delete id="deleteByUserId">
+        delete from user_role
+        where user_id = #{userId,jdbcType=BIGINT}
+
+    </delete>
+
+  <delete id="deleteByPrimaryKeys">
+    delete from user_role
+    where id in
+    <foreach collection='ids' open="(" close=")" item='id' index='index' separator=','>
+      #{id}
+    </foreach>
+  </delete>
+
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.example.basicproject.dao.domain.UserRole" useGeneratedKeys="true">
     insert into user_role (role_id, user_id, create_time, 
       edit_time, creator_id, editor_id, 
@@ -91,6 +112,22 @@
       </if>
     </trim>
   </insert>
+
+  <insert id="batchInsert">
+    insert into user_role
+    (role_id, user_id, create_time,
+     edit_time, creator_id, editor_id,
+     creator, editor
+    )
+    values
+    <foreach collection='userRoles' item='userRole' index='index' separator=','>
+        (#{userRole.roleId,jdbcType=BIGINT}, #{userRole.userId,jdbcType=BIGINT}, #{userRole.createTime,jdbcType=TIMESTAMP},
+            #{userRole.editTime,jdbcType=TIMESTAMP}, #{userRole.creatorId,jdbcType=BIGINT}, #{userRole.editorId,jdbcType=BIGINT},
+            #{userRole.creator,jdbcType=VARCHAR}, #{userRole.editor,jdbcType=VARCHAR}
+           )
+    </foreach>
+  </insert>
+
   <update id="updateByPrimaryKeySelective" parameterType="com.example.basicproject.dao.domain.UserRole">
     update user_role
     <set>

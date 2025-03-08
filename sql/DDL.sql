@@ -15,7 +15,7 @@ CREATE TABLE user
     avatar        BIGINT       NOT NULL DEFAULT 1 comment '头像|file.id',
     email         varchar(64)           default '' comment '用户邮箱',
     department_id BIGINT                DEFAULT 0 comment '部门id',
-    status        int          not null default 0 comment '状态|0-未激活，1-激活，2-停用',
+    status        int          not null default 1 comment '状态|0-停用，1-激活',
     creator_id      BIGINT      NOT NULL comment '创建人用户id',
     editor_id       BIGINT      NOT NULL comment '修改人用户id',
     create_time   datetime     not null comment '创建时间',
@@ -112,7 +112,7 @@ CREATE TABLE user_role
 CREATE TABLE permission
 (
     id          BIGINT PRIMARY KEY comment '主键',
-    parentId    BIGINT      NOT NULL comment '父节点id|permission.id',
+    parent_id    BIGINT      NOT NULL comment '父节点id|permission.id',
     path        varchar(128)         DEFAULT '' comment '路径',
     title       varchar(32) NOT NULL comment '权限主题',
     type        int         not null comment '类型|1-菜单权限，2-按钮权限',
@@ -125,7 +125,7 @@ CREATE TABLE permission
     creator     varchar(32) not null comment '创建人',
     editor      varchar(32) not null comment '修改人',
     rec_time    timestamp   not null DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '时间戳',
-    INDEX       permission_parentId (parentId)
+    INDEX       permission_parentId (parent_id)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 comment ='权限';
 

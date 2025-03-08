@@ -23,15 +23,16 @@
     where id = #{id,jdbcType=BIGINT}
   </select>
 
-    <select id="selectByRole" resultType="com.example.basicproject.dto.role.RoleResDto">
+    <select id="selectByRole" resultType="com.example.basicproject.dao.domain.Role">
         select *
         from role
         where
       <trim  suffixOverrides="and">
         1=1 and
-        <if test="role_name != null">
+        <if test="roleName != null">
           role_name = #{roleName,jdbcType=VARCHAR} and
         </if>
+
         <if test="status != null">
           status = #{status,jdbcType=VARCHAR} and
         </if>
@@ -51,7 +52,7 @@
       )
     values (#{roleName,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
       #{editTime,jdbcType=TIMESTAMP}, #{creatorId,jdbcType=BIGINT}, #{editorId,jdbcType=BIGINT}, 
-      #{creator,jdbcType=VARCHAR}, #{editor,jdbcType=VARCHAR}}
+      #{creator,jdbcType=VARCHAR}, #{editor,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.example.basicproject.dao.domain.Role" useGeneratedKeys="true">

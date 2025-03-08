@@ -30,6 +30,10 @@ public class ReqThreadInterceptor implements HandlerInterceptor {
         if (!StringUtils.isEmpty(token)){
             UserTokenInfo userTokenInfo = JSONObject.parseObject(SecretUtil.decrypt(token), UserTokenInfo.class);
             User user = userDao.selectByPrimaryKey(userTokenInfo.getId());
+            if (!user.getStatus().equals(User.OPEN_STATUS)){
+                response.sendError(HttpServletResponse.SC_FORBIDDEN, "Access Denied");
+                return false;
+            }
             ReqThreadInfoUtil.setUser(user);
         }
 

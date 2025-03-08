@@ -22,10 +22,46 @@
     from role_permission
     where id = #{id,jdbcType=BIGINT}
   </select>
+
+  <select id="selectByRoleId" resultType="com.example.basicproject.dao.domain.RolePermission">
+    select * from
+      role_permission
+    where role_id = #{roleId,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectPermissionIdByRoleId" resultType="java.lang.Long">
+    select permission_id
+    from role_permission
+    where role_id = #{roleId,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectPermissionIdByRoleIds" resultType="java.lang.String">
+    select permission_id
+    from role_permission
+    where role_id in
+    <foreach collection='ids' open="(" close=")" item='id' index='index' separator=','>
+      #{id,jdbcType=BIGINT}
+    </foreach>
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from role_permission
     where id = #{id,jdbcType=BIGINT}
   </delete>
+
+    <delete id="deleteByRoleId">
+      delete from role_permission
+      where role_id = #{roleId,jdbcType=BIGINT}
+
+    </delete>
+  <delete id="deleteByPrimaryKeys">
+    delete from role_permission
+    where id =
+    <foreach collection='ids' open="(" close=")" item='id' index='index' separator=','>
+      #{id,jdbcType=BIGINT}
+    </foreach>
+  </delete>
+
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.example.basicproject.dao.domain.RolePermission" useGeneratedKeys="true">
     insert into role_permission (role_id, permission_id, create_time, 
       edit_time, creator_id, editor_id, 
@@ -91,6 +127,22 @@
       </if>
     </trim>
   </insert>
+
+  <insert id="batchInsert">
+    insert into role_permission
+    (role_id, permission_id, create_time,
+    edit_time, creator_id, editor_id,
+    creator, editor
+    )
+    values
+    <foreach collection='userRoles' item='userRole' index='index' separator=','>
+      (#{roleId,jdbcType=BIGINT}, #{permissionId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP},
+      #{editTime,jdbcType=TIMESTAMP}, #{creatorId,jdbcType=BIGINT}, #{editorId,jdbcType=BIGINT},
+      #{creator,jdbcType=VARCHAR}, #{editor,jdbcType=VARCHAR}
+      )
+    </foreach>
+  </insert>
+
   <update id="updateByPrimaryKeySelective" parameterType="com.example.basicproject.dao.domain.RolePermission">
     update role_permission
     <set>

@@ -26,6 +26,24 @@ public class UserReqDto {
 
     private String email;
 
+    @NotNull(message = "用户状态必填",groups = {Insert.class, Update.class})
+    private Integer status;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 
     public String getName() {
         return name;
@@ -82,11 +100,17 @@ public class UserReqDto {
             user.setPassword(MD5Util.md5(this.password));
         }
 
+        if (!StringUtils.isBlank(this.id)){
+            user.setId(IdUtil.decode(this.id).longValue());
+        }
+
         user.setName(this.name);
         user.setGender(this.gender);
+
         if (!StringUtils.isBlank(this.avatar)) {
             user.setAvatar(IdUtil.decode(this.avatar).longValue());
         }
+        user.setStatus(this.status);
         user.setEmail(this.email);
         return user;
     }

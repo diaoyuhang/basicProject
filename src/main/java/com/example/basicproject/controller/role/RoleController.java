@@ -4,6 +4,8 @@ import com.example.basicproject.constant.Status;
 import com.example.basicproject.dto.PageReqCondition;
 import com.example.basicproject.dto.Pagination;
 import com.example.basicproject.dto.ResultDto;
+import com.example.basicproject.dto.role.PermissionResDto;
+import com.example.basicproject.dto.role.RolePermissionReqDto;
 import com.example.basicproject.dto.role.RoleReqDto;
 import com.example.basicproject.dto.role.RoleResDto;
 import com.example.basicproject.dto.validGroup.Delete;
@@ -13,6 +15,7 @@ import com.example.basicproject.service.PermissionService;
 import com.example.basicproject.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +35,7 @@ public class RoleController {
     private static final Long ADD_ROLE_ID = 100101L;
     private static final Long EDIT_ROLE_ID = 100102L;
     private static final Long DELETE_ROLE_ID = 100103L;
+    private static final Long ASSIGN_PERMISSION_ID = 100105L;
 
     private PermissionService permissionService;
     private RoleService roleService;
@@ -48,7 +52,7 @@ public class RoleController {
 
     @PostMapping("/getRoleList")
     public ResultDto<Pagination<List<RoleResDto>>> getRoleList(@RequestBody PageReqCondition<RoleReqDto> pageReqCondition) {
-        if(permissionService.validate(ROLE_MENU_ID)){
+        if(!permissionService.validate(ROLE_MENU_ID)){
             return ResultDto.createFail(Status.PERMISSION_ERROR);
         }
         Pagination<List<RoleResDto>> res = roleService.getRoleList(pageReqCondition);
@@ -57,7 +61,7 @@ public class RoleController {
 
     @PostMapping("/addRole")
     public ResultDto<Boolean> addRole(@RequestBody @Validated(value = {Insert.class}) RoleReqDto roleReqDto) {
-        if(permissionService.validate(ADD_ROLE_ID)){
+        if(!permissionService.validate(ADD_ROLE_ID)){
             return ResultDto.createFail(Status.PERMISSION_ERROR);
         }
         roleService.addRole(roleReqDto);
@@ -66,7 +70,7 @@ public class RoleController {
 
     @PostMapping("/editRole")
     public ResultDto<Boolean> editRole(@RequestBody @Validated(value = {Update.class}) RoleReqDto roleReqDto) {
-        if(permissionService.validate(EDIT_ROLE_ID)){
+        if(!permissionService.validate(EDIT_ROLE_ID)){
             return ResultDto.createFail(Status.PERMISSION_ERROR);
         }
         roleService.editRole(roleReqDto);
@@ -75,10 +79,32 @@ public class RoleController {
 
     @PostMapping("/deleteRole")
     public ResultDto<Boolean> deleteRole(@RequestBody @Validated(value = {Delete.class}) RoleReqDto roleReqDto) {
-        if(permissionService.validate(DELETE_ROLE_ID)){
+        if(!permissionService.validate(DELETE_ROLE_ID)){
             return ResultDto.createFail(Status.PERMISSION_ERROR);
         }
         roleService.deleteRole(roleReqDto);
         return ResultDto.createSuccess(true);
+    }
+
+    @PostMapping("/assignPermission")
+    public ResultDto<Boolean> assignPermission(@RequestBody @Validated RolePermissionReqDto rolePermissionReqDto){
+        if (!permissionService.validate(ASSIGN_PERMISSION_ID)) {
+            return ResultDto.createFail(Status.PERMISSION_ERROR);
+        }
+
+        roleService.assignPermission(rolePermissionReqDto);
+        return ResultDto.createSuccess(true);
+    }
+
+    @GetMapping("/allPermissionList")
+    public ResultDto<List<PermissionResDto>> allPermissionList(){
+        List<PermissionResDto> res = permissionService.allPermissionList();
+        return ResultDto.createSuccess(res);
+    }
+
+    @GetMapping("/getExistPermission")
+    public ResultDto<List<String>> getExistPermission(String roleId){
+        List<String> pIds = roleService.getExistPermissionByRoleId(roleId);
+        return ResultDto.createSuccess(pIds);
     }
 }

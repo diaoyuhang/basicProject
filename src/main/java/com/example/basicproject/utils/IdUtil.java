@@ -16,7 +16,11 @@ public class IdUtil {
 
     public static BigInteger decode(String encoded) {
         BigInteger num = fromBase36(encoded);
-        return num.xor(XOR_KEY).divide(MULTIPLIER); // 先 XOR 还原，再除回去
+        BigInteger divide = num.xor(XOR_KEY).divide(MULTIPLIER);
+        if (divide.compareTo(BigInteger.valueOf(0)) < 0) {
+            throw new RuntimeException("无效ID");
+        }
+        return divide;// 先 XOR 还原，再除回去
     }
 
     private static String toBase36(BigInteger num) {
@@ -50,9 +54,9 @@ public class IdUtil {
     }
 
     public static void main(String[] args) {
-        BigInteger id = new BigInteger("1");
+        BigInteger id = new BigInteger("-2");
         String encoded = encode(id);
-        BigInteger decoded = decode(encoded);
+        BigInteger decoded = decode("ZFN");
 
         System.out.println("原始 ID: " + id);
         System.out.println("加密 ID: " + encoded);

@@ -20,5 +20,5 @@ public interface RoleDao {
 
     int updateByPrimaryKey(Role record);
 
-    List<RoleResDto> selectByRole(Role role);
+    List<Role> selectByRole(Role role);
 }

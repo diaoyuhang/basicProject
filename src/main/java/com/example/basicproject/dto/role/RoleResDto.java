@@ -1,5 +1,12 @@
 package com.example.basicproject.dto.role;
 
+import com.example.basicproject.dao.domain.Role;
+import com.example.basicproject.utils.IdUtil;
+import io.micrometer.common.util.StringUtils;
+import org.springframework.beans.BeanUtils;
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Date;
 
 public class RoleResDto {
@@ -115,5 +122,14 @@ public class RoleResDto {
 
     public void setEditor(String editor) {
         this.editor = editor;
+    }
+
+    public static RoleResDto create(Role role) {
+        RoleResDto roleResDto = new RoleResDto();
+        BeanUtils.copyProperties(role,roleResDto,"id");
+        if (role.getId()!=null){
+            roleResDto.setId(IdUtil.encode(BigInteger.valueOf(role.getId())));
+        }
+        return roleResDto;
     }
 }

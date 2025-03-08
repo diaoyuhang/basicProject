@@ -4,6 +4,8 @@ import com.example.basicproject.dao.domain.Permission;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 @Mapper
 public interface PermissionDao {
     int deleteByPrimaryKey(Long id);
@@ -19,4 +21,6 @@ public interface PermissionDao {
     int updateByPrimaryKey(Permission record);
 
     Integer selectCountByPermissionIdAndUserId(@Param("permissionId") Long permissionId,@Param("userId") Long userId);
+
+    List<Permission> selectAll();
 }

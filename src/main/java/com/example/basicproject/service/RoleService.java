@@ -2,6 +2,7 @@ package com.example.basicproject.service;
 
 import com.example.basicproject.dto.PageReqCondition;
 import com.example.basicproject.dto.Pagination;
+import com.example.basicproject.dto.role.RolePermissionReqDto;
 import com.example.basicproject.dto.role.RoleReqDto;
 import com.example.basicproject.dto.role.RoleResDto;
 
@@ -15,4 +16,10 @@ public interface RoleService {
     void editRole(RoleReqDto roleReqDto);
 
     void deleteRole(RoleReqDto roleReqDto);
+
+    void assignPermission(RolePermissionReqDto rolePermissionReqDto);
+
+    List<String> getExistPermissionByRoleId(String roleId);
+
+    List<String> getPermissionIdRoleId(List<Long> roleIds);
 }

@@ -4,9 +4,14 @@ import java.util.Date;
 
 /**
  * permission
- * @author 
+ *
+ * @author
  */
-public class Permission{
+public class Permission {
+    public static final Integer ONE_LEVEL = 1;
+    public static final Integer TWO_LEVEL = 2;
+    public static final Integer THREE_LEVEL = 3;
+
     /**
      * 主键
      */
@@ -15,7 +20,7 @@ public class Permission{
     /**
      * 父节点id|permission.id
      */
-    private Long parentid;
+    private Long parentId;
 
     /**
      * 路径
@@ -80,12 +85,12 @@ public class Permission{
         this.id = id;
     }
 
-    public Long getParentid() {
-        return parentid;
+    public Long getParentId() {
+        return parentId;
     }
 
-    public void setParentid(Long parentid) {
-        this.parentid = parentid;
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
     }
 
     public String getPath() {
