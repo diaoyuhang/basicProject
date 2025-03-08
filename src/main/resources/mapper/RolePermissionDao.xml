@@ -35,12 +35,12 @@
     where role_id = #{roleId,jdbcType=BIGINT}
   </select>
 
-  <select id="selectPermissionIdByRoleIds" resultType="java.lang.String">
-    select permission_id
+  <select id="selectPermissionIdByRoleIds" resultType="java.lang.Long">
+    select distinct permission_id
     from role_permission
     where role_id in
-    <foreach collection='ids' open="(" close=")" item='id' index='index' separator=','>
-      #{id,jdbcType=BIGINT}
+    <foreach collection='roleIds' open="(" close=")" item='roleId' index='index' separator=','>
+      #{roleId,jdbcType=BIGINT}
     </foreach>
   </select>
 
@@ -135,10 +135,10 @@
     creator, editor
     )
     values
-    <foreach collection='userRoles' item='userRole' index='index' separator=','>
-      (#{roleId,jdbcType=BIGINT}, #{permissionId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP},
-      #{editTime,jdbcType=TIMESTAMP}, #{creatorId,jdbcType=BIGINT}, #{editorId,jdbcType=BIGINT},
-      #{creator,jdbcType=VARCHAR}, #{editor,jdbcType=VARCHAR}
+    <foreach collection='rolePermissionList' item='rp' index='index' separator=','>
+      (#{rp.roleId,jdbcType=BIGINT}, #{rp.permissionId,jdbcType=BIGINT}, #{rp.createTime,jdbcType=TIMESTAMP},
+      #{rp.editTime,jdbcType=TIMESTAMP}, #{rp.creatorId,jdbcType=BIGINT}, #{rp.editorId,jdbcType=BIGINT},
+      #{rp.creator,jdbcType=VARCHAR}, #{rp.editor,jdbcType=VARCHAR}
       )
     </foreach>
   </insert>

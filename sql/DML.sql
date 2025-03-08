@@ -26,7 +26,7 @@ INSERT INTO  basic.permission (id, parent_id, title, type, level, status, create
 values (100105, 1001, '分配权限', 2, 3, 1, now(), now(), 0, 0, 'system', 'system');
 INSERT INTO  basic.permission (id, parent_id, title, type, level, status, create_time, edit_time, creator_id, editor_id,
                                creator, editor)
-values (1002, 10, '用户列表', 1, 2, 1, now(), now(), 0, 0, 'system', 'system');
+values (1002, 10, '用户管理', 1, 2, 1, now(), now(), 0, 0, 'system', 'system');
 INSERT INTO  basic.permission (id, parent_id, title, type, level, status, create_time, edit_time, creator_id, editor_id,
                                creator, editor)
 values (1002001, 1002, '添加用户', 2, 3, 1, now(), now(), 0, 0, 'system', 'system');

@@ -29,5 +29,5 @@ public interface RolePermissionDao {
 
     List<Long> selectPermissionIdByRoleId(Long roleId);
 
-    List<String> selectPermissionIdByRoleIds(List<Long> roleIds);
+    List<Long> selectPermissionIdByRoleIds(List<Long> roleIds);
 }

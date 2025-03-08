@@ -3,7 +3,10 @@ package com.example.basicproject.dao;
 import com.example.basicproject.dao.domain.UserRole;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 @Mapper
 public interface UserRoleDao {
@@ -26,4 +29,7 @@ public interface UserRoleDao {
     void batchInsert(List<UserRole> userRoles);
 
     void deleteByPrimaryKeys(List<Long> ids);
+
+    void deleteByRoleId(Long roleId);
+
 }

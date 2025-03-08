@@ -47,6 +47,11 @@
     </foreach>
   </delete>
 
+    <delete id="deleteByRoleId">
+      delete from user_role
+      where role_id = #{roleId,jdbcType=BIGINT}
+    </delete>
+
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.example.basicproject.dao.domain.UserRole" useGeneratedKeys="true">
     insert into user_role (role_id, user_id, create_time, 
       edit_time, creator_id, editor_id, 

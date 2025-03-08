@@ -2,6 +2,7 @@ package com.example.basicproject.service.impl;
 
 import com.example.basicproject.dao.RoleDao;
 import com.example.basicproject.dao.RolePermissionDao;
+import com.example.basicproject.dao.UserRoleDao;
 import com.example.basicproject.dao.domain.Role;
 import com.example.basicproject.dao.domain.RolePermission;
 import com.example.basicproject.dto.PageReqCondition;
@@ -30,6 +31,12 @@ public class RoleServiceImpl implements RoleService {
 
     private RoleDao roleDao;
     private RolePermissionDao rolePermissionDao;
+    private UserRoleDao userRoleDao;
+
+    @Autowired
+    public void setUserRoleDao(UserRoleDao userRoleDao) {
+        this.userRoleDao = userRoleDao;
+    }
 
     @Autowired
     public void setRolePermissionDao(RolePermissionDao rolePermissionDao) {
@@ -75,10 +82,14 @@ public class RoleServiceImpl implements RoleService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void deleteRole(RoleReqDto roleReqDto) {
-        roleDao.deleteByPrimaryKey(IdUtil.decode(roleReqDto.getId()).longValue());
+        long roleId = IdUtil.decode(roleReqDto.getId()).longValue();
+        roleDao.deleteByPrimaryKey(roleId);
+        rolePermissionDao.deleteByRoleId(roleId);
+        userRoleDao.deleteByRoleId(roleId);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void assignPermission(RolePermissionReqDto rolePermissionReqDto) {
         List<RolePermission> rolePermissionList = rolePermissionReqDto.convertRolePermission();
         Long roleId = IdUtil.decode(rolePermissionReqDto.getRoleId()).longValue();
@@ -124,6 +135,6 @@ public class RoleServiceImpl implements RoleService {
         if (CollectionUtils.isEmpty(roleIds)){
             return new ArrayList<>();
         }
-        return rolePermissionDao.selectPermissionIdByRoleIds(roleIds);
+        return rolePermissionDao.selectPermissionIdByRoleIds(roleIds).stream().map(id ->IdUtil.encode(BigInteger.valueOf(id))).collect(Collectors.toList());
     }
 }

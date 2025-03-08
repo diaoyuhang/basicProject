@@ -73,8 +73,8 @@ public class UserController {
         return ResultDto.createSuccess(true);
     }
 
-    @PostMapping("/modifyUserStatus")
-    public ResultDto<Boolean> modifyUserStatus(@RequestBody @Validated(value = {Update.class}) UserReqDto userReqDto) {
+    @PostMapping("/modifyUser")
+    public ResultDto<Boolean> modifyUser(@RequestBody @Validated(value = {Update.class}) UserReqDto userReqDto) {
         if (!permissionService.validate(EDIT_USER_ID)) {
             return ResultDto.createFail(Status.PERMISSION_ERROR);
         }

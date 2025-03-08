@@ -128,6 +128,7 @@ public class UserServiceImpl implements UserService {
         if (!newRoles.isEmpty()) {
             userRoleDao.batchInsert(newRoles);
         }
+
     }
 
     @Override

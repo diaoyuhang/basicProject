@@ -131,7 +131,7 @@ CREATE TABLE permission
 
 CREATE TABLE role_permission
 (
-    id            BIGINT PRIMARY KEY comment '主键',
+    id            BIGINT AUTO_INCREMENT PRIMARY KEY comment '主键',
     role_id       BIGINT      NOT NULL comment '角色id',
     permission_id BIGINT      NOT NULL comment '权限id',
     create_time   datetime    not null comment '创建时间',
@@ -149,7 +149,7 @@ CREATE TABLE role_permission
 
 CREATE TABLE user_permission
 (
-    id            BIGINT PRIMARY KEY comment '主键',
+    id            BIGINT AUTO_INCREMENT PRIMARY KEY comment '主键',
     user_id       BIGINT      NOT NULL comment '用户id',
     permission_id BIGINT      NOT NULL comment '权限id',
     create_time   datetime    not null comment '创建时间',
