@@ -26,7 +26,18 @@
     from permission
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+
+    <select id="selectCountByPermissionIdAndUserId" resultType="java.lang.Integer">
+      select count(1)
+      from user t1
+      where t1.id =  #{userId,jdbcType=BIGINT}
+        and exists(select *
+                   from user_role t2
+                   where t2.user_id = t1.id
+                     and exists(select * from role_permission t3 where t3.permission_id =  #{permissionId,jdbcType=BIGINT} and t3.role_id = t2.role_id))
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from permission
     where id = #{id,jdbcType=BIGINT}
   </delete>

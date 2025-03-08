@@ -1,5 +1,7 @@
 package com.example.basicproject.dao.domain;
 
+import com.example.basicproject.constant.BaseConstant;
+
 import java.util.Date;
 
 /**
@@ -61,6 +63,19 @@ public class File {
      * 文件字节
      */
     private byte[] data;
+
+    public static File create(String originalFilename,byte[] content, String md5){
+        File fileInstance = new File();
+        fileInstance.setFileName(originalFilename);
+        fileInstance.setData(content);
+        fileInstance.setMd5(md5);
+        int index = originalFilename.lastIndexOf(BaseConstant.DOT_SEPARATOR);
+        if (index>-1){
+            fileInstance.setFileType(originalFilename.substring(index + 1).toLowerCase());
+            fileInstance.setFileName(originalFilename.substring(0,index));
+        }
+        return fileInstance;
+    }
 
     public Long getId() {
         return id;

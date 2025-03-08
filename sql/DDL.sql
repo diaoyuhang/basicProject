@@ -16,6 +16,8 @@ CREATE TABLE user
     email         varchar(64)           default '' comment '用户邮箱',
     department_id BIGINT                DEFAULT 0 comment '部门id',
     status        int          not null default 0 comment '状态|0-未激活，1-激活，2-停用',
+    creator_id      BIGINT      NOT NULL comment '创建人用户id',
+    editor_id       BIGINT      NOT NULL comment '修改人用户id',
     create_time   datetime     not null comment '创建时间',
     edit_time     datetime     not null comment '编辑时间',
     creator       varchar(32)  not null comment '创建人',
@@ -92,7 +94,7 @@ CREATE TABLE role
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 comment ='角色';
 
-CREATE TABLE use_role
+CREATE TABLE user_role
 (
     id          BIGINT AUTO_INCREMENT PRIMARY KEY comment '主键',
     role_id     BIGINT      NOT NULL comment '角色id',

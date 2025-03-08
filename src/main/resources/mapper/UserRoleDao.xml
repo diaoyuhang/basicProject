@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.basicproject.dao.UseRoleDao">
-  <resultMap id="BaseResultMap" type="com.example.basicproject.dao.domain.UseRole">
+<mapper namespace="com.example.basicproject.dao.UserRoleDao">
+  <resultMap id="BaseResultMap" type="com.example.basicproject.dao.domain.UserRole">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="role_id" jdbcType="BIGINT" property="roleId" />
     <result column="user_id" jdbcType="BIGINT" property="userId" />
@@ -19,15 +19,15 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from use_role
+    from user_role
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from use_role
+    delete from user_role
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.example.basicproject.dao.domain.UseRole" useGeneratedKeys="true">
-    insert into use_role (role_id, user_id, create_time, 
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.example.basicproject.dao.domain.UserRole" useGeneratedKeys="true">
+    insert into user_role (role_id, user_id, create_time, 
       edit_time, creator_id, editor_id, 
       creator, editor
       )
@@ -36,8 +36,8 @@
       #{creator,jdbcType=VARCHAR}, #{editor,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.example.basicproject.dao.domain.UseRole" useGeneratedKeys="true">
-    insert into use_role
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.example.basicproject.dao.domain.UserRole" useGeneratedKeys="true">
+    insert into user_role
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="roleId != null">
         role_id,
@@ -91,8 +91,8 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.example.basicproject.dao.domain.UseRole">
-    update use_role
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.basicproject.dao.domain.UserRole">
+    update user_role
     <set>
       <if test="roleId != null">
         role_id = #{roleId,jdbcType=BIGINT},
@@ -121,8 +121,8 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.example.basicproject.dao.domain.UseRole">
-    update use_role
+  <update id="updateByPrimaryKey" parameterType="com.example.basicproject.dao.domain.UserRole">
+    update user_role
     set role_id = #{roleId,jdbcType=BIGINT},
       user_id = #{userId,jdbcType=BIGINT},
       create_time = #{createTime,jdbcType=TIMESTAMP},

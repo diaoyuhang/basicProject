@@ -2,7 +2,7 @@ package com.example.basicproject.utils;
 
 import java.math.BigInteger;
 
-public class IdEncryptUtil {
+public class IdUtil {
 
     private static final String ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private static final BigInteger BASE = BigInteger.valueOf(ALPHABET.length());
@@ -50,7 +50,7 @@ public class IdEncryptUtil {
     }
 
     public static void main(String[] args) {
-        BigInteger id = new BigInteger("987654321098876543");
+        BigInteger id = new BigInteger("1");
         String encoded = encode(id);
         BigInteger decoded = decode(encoded);
 

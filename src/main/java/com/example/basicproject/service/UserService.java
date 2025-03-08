@@ -11,4 +11,6 @@ public interface UserService {
     Pagination<List<UserResDto>> getUserList(PageReqCondition<UserReqDto> pageReqCondition);
 
     UserResDto register(UserReqDto userReqDto);
+
+    String login(UserReqDto userReqDto);
 }

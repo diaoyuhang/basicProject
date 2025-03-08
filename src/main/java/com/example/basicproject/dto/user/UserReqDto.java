@@ -1,27 +1,27 @@
 package com.example.basicproject.dto.user;
 
-import com.example.basicproject.constant.BaseConstant;
 import com.example.basicproject.dao.domain.User;
-import com.example.basicproject.utils.IdEncryptUtil;
+import com.example.basicproject.dto.validGroup.Delete;
+import com.example.basicproject.dto.validGroup.Insert;
+import com.example.basicproject.dto.validGroup.Update;
+import com.example.basicproject.utils.IdUtil;
 import com.example.basicproject.utils.MD5Util;
-import com.example.basicproject.utils.UserHelperUtil;
 import io.micrometer.common.util.StringUtils;
 import jakarta.validation.constraints.NotEmpty;
-
-import java.util.Date;
-
-import static net.sf.jsqlparser.util.validation.metadata.NamedObject.user;
+import jakarta.validation.constraints.NotNull;
 
 public class UserReqDto {
-    @NotEmpty(message = "工号不能为空")
+    @NotEmpty(message = "用户id不能为空", groups = {Update.class, Delete.class})
+    private String id;
+    @NotEmpty(message = "工号不能为空", groups = {Update.class, Insert.class})
     private String employeeId;
-    @NotEmpty(message = "密码不能为空")
+    @NotEmpty(message = "密码不能为空", groups = {Update.class, Insert.class})
     private String password;
-
+    @NotEmpty(message = "名称不能为空", groups = {Update.class, Insert.class})
     private String name;
-
+    @NotNull(message = "性别必填", groups = {Update.class, Insert.class})
     private Integer gender;
-
+    @NotEmpty(message = "头像不能为空", groups = {Update.class, Insert.class})
     private String avatar;
 
     private String email;
@@ -85,18 +85,10 @@ public class UserReqDto {
         user.setName(this.name);
         user.setGender(this.gender);
         if (!StringUtils.isBlank(this.avatar)) {
-            user.setAvatar(IdEncryptUtil.decode(this.avatar).longValue());
+            user.setAvatar(IdUtil.decode(this.avatar).longValue());
         }
         user.setEmail(this.email);
         return user;
     }
 
-    public User convertNewUser() {
-        User user = this.convertUser();
-        user.setCreateTime(new Date());
-        user.setEditTime(new Date());
-        user.setCreator(BaseConstant.SYSTEM_USER);
-        user.setEditor(BaseConstant.SYSTEM_USER);
-        return user;
-    }
 }

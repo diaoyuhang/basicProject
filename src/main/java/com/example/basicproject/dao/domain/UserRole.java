@@ -6,7 +6,7 @@ import java.util.Date;
  * use_role
  * @author 
  */
-public class UseRole {
+public class UserRole {
     /**
      * 主键
      */

@@ -1,7 +1,7 @@
 package com.example.basicproject.dto.user;
 
 import com.example.basicproject.dao.domain.User;
-import com.example.basicproject.utils.IdEncryptUtil;
+import com.example.basicproject.utils.IdUtil;
 import org.springframework.beans.BeanUtils;
 
 import java.math.BigInteger;
@@ -28,7 +28,7 @@ public class UserResDto {
     /**
      * 性别|0-女，1-男
      */
-    private Boolean gender;
+    private Integer gender;
 
     /**
      * 头像|file.id
@@ -102,11 +102,11 @@ public class UserResDto {
         this.name = name;
     }
 
-    public Boolean getGender() {
+    public Integer getGender() {
         return gender;
     }
 
-    public void setGender(Boolean gender) {
+    public void setGender(Integer gender) {
         this.gender = gender;
     }
 
@@ -177,7 +177,7 @@ public class UserResDto {
     public static UserResDto create(User user) {
         UserResDto userResDto = new UserResDto();
         BeanUtils.copyProperties(user,userResDto,"id");
-        userResDto.setId(IdEncryptUtil.encode(BigInteger.valueOf(user.getId())));
+        userResDto.setId(IdUtil.encode(BigInteger.valueOf(user.getId())));
 
         return userResDto;
     }

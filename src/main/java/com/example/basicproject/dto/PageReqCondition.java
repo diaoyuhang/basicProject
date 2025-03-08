@@ -1,8 +1,8 @@
 package com.example.basicproject.dto;
 
 public class PageReqCondition<T> {
-    private Integer pageSize;
-    private Integer pageNum;
+    private Integer pageSize=10;
+    private Integer pageNum=1;
     private T condition;
 
     public Integer getPageSize() {

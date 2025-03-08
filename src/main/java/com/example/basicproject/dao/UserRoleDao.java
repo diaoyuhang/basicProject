@@ -1,0 +1,19 @@
+package com.example.basicproject.dao;
+
+import com.example.basicproject.dao.domain.UserRole;
+import org.apache.ibatis.annotations.Mapper;
+
+@Mapper
+public interface UserRoleDao {
+    int deleteByPrimaryKey(Long id);
+
+    int insert(UserRole record);
+
+    int insertSelective(UserRole record);
+
+    UserRole selectByPrimaryKey(Long id);
+
+    int updateByPrimaryKeySelective(UserRole record);
+
+    int updateByPrimaryKey(UserRole record);
+}

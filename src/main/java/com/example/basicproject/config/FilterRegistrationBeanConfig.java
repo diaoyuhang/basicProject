@@ -6,7 +6,7 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-//@Configuration
+@Configuration
 public class FilterRegistrationBeanConfig {
 
     @Bean
@@ -16,8 +16,8 @@ public class FilterRegistrationBeanConfig {
         bean.setName("tokenFilter");
         bean.addUrlPatterns("/*");
         bean.setOrder(2);
-        bean.addInitParameter("excludedAccuratePaths","");//需要排除的uri
-        bean.addInitParameter("excludedVaguePaths","");//需要排除的uri
+        bean.addInitParameter("excludedAccuratePaths","/user/login,/user/register");//需要排除的uri
+        bean.addInitParameter("excludedVaguePaths","/file/img/.*");//需要排除的uri
         return bean;
     }
 

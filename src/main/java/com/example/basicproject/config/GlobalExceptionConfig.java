@@ -9,6 +9,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 import java.util.stream.Collectors;
 
@@ -42,6 +43,12 @@ public class GlobalExceptionConfig {
     public ResultDto<String> methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e) {
         String errorMessage = e.getBindingResult().getAllErrors().stream().map(t -> t.getDefaultMessage()).collect(Collectors.joining(BaseConstant.COMMA_SEPARATOR));
         return ResultDto.createFail(Status.PARAM_ERROR, errorMessage);
+    }
+
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    @ResponseBody
+    public ResultDto<String> handleMaxSizeException(MaxUploadSizeExceededException ex) {
+        return ResultDto.createFail(Status.GLOBAL_ERROR, "文件大小超出限制");
     }
 
 }

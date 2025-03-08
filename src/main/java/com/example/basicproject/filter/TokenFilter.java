@@ -1,6 +1,8 @@
 package com.example.basicproject.filter;
 
+import com.alibaba.fastjson.JSONObject;
 import com.example.basicproject.constant.BaseConstant;
+import com.example.basicproject.dto.user.UserTokenInfo;
 import com.example.basicproject.utils.ReqThreadInfoUtil;
 import com.example.basicproject.utils.SecretUtil;
 import io.micrometer.common.util.StringUtils;
@@ -16,6 +18,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -25,15 +28,15 @@ public class TokenFilter implements Filter {
 
     private Set<String> excludedAccuratePaths;
 
-    private List<Pattern> excludedVaguePaths;
+    private Set<Pattern> excludedVaguePaths;
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
         String paths = filterConfig.getInitParameter("excludedAccuratePaths");
         excludedAccuratePaths = new HashSet<>(Arrays.asList(paths.split(BaseConstant.COMMA_SEPARATOR)));
 
         String vaguePaths = filterConfig.getInitParameter("excludedVaguePaths");
-        excludedVaguePaths = new ArrayList<>();
+        excludedVaguePaths = new HashSet<>();
         for (String path : vaguePaths.split(BaseConstant.COMMA_SEPARATOR)) {
             excludedVaguePaths.add(Pattern.compile(path));
         }
@@ -48,27 +51,31 @@ public class TokenFilter implements Filter {
             String token = request.getHeader("token");
             if (!isAuthWhiteList(requestURI)) {
                 if (StringUtils.isBlank(token)) {
-                    try {
-                        String decrypt = SecretUtil.decrypt(token);
-                    } catch (Exception e) {
-                        response.sendError(HttpServletResponse.SC_FORBIDDEN, "Access Denied");
-                    }
+                    response.sendError(HttpServletResponse.SC_FORBIDDEN, "Access Denied");
                     return;
+                } else {
+                    String decrypt = SecretUtil.decrypt(token);
+                    UserTokenInfo userTokenInfo = JSONObject.parseObject(decrypt, UserTokenInfo.class);
+                    Date cur = new Date();
+                    if (cur.getTime() > userTokenInfo.getExpirationTime().getTime()) {
+                        response.sendError(HttpServletResponse.SC_FORBIDDEN, "Access Denied");
+                        return;
+                    }
                 }
             }
 
             ReqThreadInfoUtil.setToken(token);
             // 要继续处理请求，必须添加 filterChain.doFilter()
-            filterChain.doFilter(servletRequest,servletResponse);
+            filterChain.doFilter(servletRequest, servletResponse);
         } catch (Exception e) {
             throw e;
-        }finally {
+        } finally {
             ReqThreadInfoUtil.removeToken();
         }
     }
 
-    public Boolean isAuthWhiteList(String uri){
-        if (excludedAccuratePaths.contains(uri)){
+    public Boolean isAuthWhiteList(String uri) {
+        if (excludedAccuratePaths.contains(uri)) {
             return true;
         }
 

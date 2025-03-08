@@ -19,15 +19,15 @@ public class ResultDto<T> {
         return resultDto;
     }
 
-    public static ResultDto<String> createFail(Status s) {
-        ResultDto<String> resultDto = new ResultDto<>();
+    public static ResultDto createFail(Status s) {
+        ResultDto resultDto = new ResultDto();
         resultDto.code = s.getStatueCode();
         resultDto.msg = s.getMessage();
         return resultDto;
     }
 
-    public static ResultDto<String> createFail(Status s,String errorMessage) {
-        ResultDto<String> resultDto = new ResultDto<>();
+    public static ResultDto createFail(Status s,String errorMessage) {
+        ResultDto resultDto = new ResultDto();
         resultDto.code = s.getStatueCode();
         resultDto.msg = errorMessage;
         return resultDto;

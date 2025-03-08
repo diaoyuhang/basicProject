@@ -71,6 +71,31 @@ public class User{
      * 修改人
      */
     private String editor;
+    /**
+     * 创建人用户id
+     */
+    private Long creatorId;
+
+    /**
+     * 修改人用户id
+     */
+    private Long editorId;
+
+    public Long getCreatorId() {
+        return creatorId;
+    }
+
+    public void setCreatorId(Long creatorId) {
+        this.creatorId = creatorId;
+    }
+
+    public Long getEditorId() {
+        return editorId;
+    }
+
+    public void setEditorId(Long editorId) {
+        this.editorId = editorId;
+    }
 
     public Long getId() {
         return id;

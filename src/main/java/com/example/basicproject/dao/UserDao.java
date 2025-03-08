@@ -22,4 +22,6 @@ public interface UserDao {
     int updateByPrimaryKey(User record);
 
     List<User> selectByUser(User user);
+
+    User selectByEmployeeIdAndPassword(User user);
 }

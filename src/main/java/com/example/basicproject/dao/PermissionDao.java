@@ -2,6 +2,7 @@ package com.example.basicproject.dao;
 
 import com.example.basicproject.dao.domain.Permission;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface PermissionDao {
@@ -16,4 +17,6 @@ public interface PermissionDao {
     int updateByPrimaryKeySelective(Permission record);
 
     int updateByPrimaryKey(Permission record);
+
+    Integer selectCountByPermissionIdAndUserId(@Param("permissionId") Long permissionId,@Param("userId") Long userId);
 }

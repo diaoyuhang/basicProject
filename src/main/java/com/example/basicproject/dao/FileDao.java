@@ -2,6 +2,7 @@ package com.example.basicproject.dao;
 
 import com.example.basicproject.dao.domain.File;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface FileDao {
@@ -18,4 +19,6 @@ public interface FileDao {
     int updateByPrimaryKeyWithBLOBs(File record);
 
     int updateByPrimaryKey(File record);
+
+    Long selectIdByMD5(@Param("md5") String md5);
 }
