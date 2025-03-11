@@ -84,7 +84,7 @@ public class UserServiceImpl implements UserService {
     public String login(UserReqDto userReqDto) {
         User user = userReqDto.convertUser();
         User userInfo = userDao.selectByEmployeeIdAndPassword(user);
-        Assert.notNull(userInfo,"用户不存在");
+        Assert.notNull(userInfo,"用户或密码错误");
         Assert.isTrue(userInfo.getStatus().equals(user.OPEN_STATUS),"用户已被停用");
 
         Date cur = new Date();

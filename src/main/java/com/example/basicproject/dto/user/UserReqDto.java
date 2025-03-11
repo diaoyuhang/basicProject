@@ -3,6 +3,7 @@ package com.example.basicproject.dto.user;
 import com.example.basicproject.dao.domain.User;
 import com.example.basicproject.dto.validGroup.Delete;
 import com.example.basicproject.dto.validGroup.Insert;
+import com.example.basicproject.dto.validGroup.Select;
 import com.example.basicproject.dto.validGroup.Update;
 import com.example.basicproject.utils.IdUtil;
 import com.example.basicproject.utils.MD5Util;
@@ -13,9 +14,9 @@ import jakarta.validation.constraints.NotNull;
 public class UserReqDto {
     @NotEmpty(message = "用户id不能为空", groups = {Update.class, Delete.class})
     private String id;
-    @NotEmpty(message = "工号不能为空", groups = {Update.class, Insert.class})
+    @NotEmpty(message = "工号不能为空", groups = {Select.class,Update.class, Insert.class})
     private String employeeId;
-    @NotEmpty(message = "密码不能为空", groups = {Update.class, Insert.class})
+    @NotEmpty(message = "密码不能为空", groups = {Select.class,Update.class, Insert.class})
     private String password;
     @NotEmpty(message = "名称不能为空", groups = {Update.class, Insert.class})
     private String name;
