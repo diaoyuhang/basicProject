@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService {
         if (condition == null) {
             condition = new UserReqDto();
         }
-        List<User> userList = userDao.selectByUser(condition.convertUser());
+        List<User> userList = userDao.selectByUser(condition);
         List<UserResDto> res = userList.stream().map(UserResDto::create).collect(Collectors.toList());
 
         return Pagination.create(page.getTotal(), pageReqCondition.getPageSize(), pageReqCondition.getPageNum(), res);

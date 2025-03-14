@@ -34,16 +34,42 @@
       where
       <trim suffixOverrides="and">
           1=1 and
-          <if test="employeeId != null">
+          <if test="employeeId != null and employeeId!=''">
               employee_id = #{employeeId,jdbcType=VARCHAR} and
           </if>
-          <if test="name != null">
+          <if test="name != null and name!=''">
               name = #{name,jdbcType=VARCHAR} and
           </if>
           <if test="gender != null">
               gender = #{gender,jdbcType=VARCHAR} and
           </if>
+
+          <if test="status != null">
+            gender = #{status,jdbcType=VARCHAR} and
+          </if>
+
+        <if test="editTimeRange != null and !editTimeRange.isEmpty()">
+          edit_time between #{editTimeRange[0]} and #{editTimeRange[1]}
+        </if>
       </trim>
+
+    <choose>
+      <when test="sortField != null and sortOrder != null and sortField == 'createTime'">
+        ORDER BY
+        create_time
+        ${sortOrder}
+      </when>
+
+      <when test="sortField != null and sortOrder != null and sortField == 'editTime'">
+        ORDER BY
+        edit_time
+        ${sortOrder}
+      </when>
+
+      <otherwise>
+        ORDER BY id ASC
+      </otherwise>
+    </choose>
   </select>
 
   <select id="selectByEmployeeIdAndPassword" resultType="com.example.basicproject.dao.domain.User">

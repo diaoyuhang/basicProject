@@ -11,6 +11,9 @@ import io.micrometer.common.util.StringUtils;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
+import java.util.Date;
+import java.util.List;
+
 public class UserReqDto {
     @NotEmpty(message = "用户id不能为空", groups = {Update.class, Delete.class})
     private String id;
@@ -29,6 +32,36 @@ public class UserReqDto {
 
     @NotNull(message = "用户状态必填",groups = {Insert.class, Update.class})
     private Integer status;
+
+    private List<Date> editTimeRange;
+
+    private String sortField;
+
+    private String sortOrder;
+
+    public String getSortField() {
+        return sortField;
+    }
+
+    public void setSortField(String sortField) {
+        this.sortField = sortField;
+    }
+
+    public String getSortOrder() {
+        return sortOrder;
+    }
+
+    public void setSortOrder(String sortOrder) {
+        this.sortOrder = sortOrder;
+    }
+
+    public List<Date> getEditTimeRange() {
+        return editTimeRange;
+    }
+
+    public void setEditTimeRange(List<Date> editTimeRange) {
+        this.editTimeRange = editTimeRange;
+    }
 
     public String getId() {
         return id;
