@@ -20,4 +20,6 @@ public interface UserService {
     List<String> getExistPermission();
 
     void modifyUser(UserReqDto userReqDto);
+
+    void batchStop(List<String> ids);
 }

@@ -24,4 +24,6 @@ public interface UserDao {
     List<User> selectByUser(UserReqDto user);
 
     User selectByEmployeeIdAndPassword(User user);
+
+    void batchStopByIds(List<Long> ids);
 }

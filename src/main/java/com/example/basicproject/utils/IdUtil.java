@@ -54,13 +54,13 @@ public class IdUtil {
     }
 
     public static void main(String[] args) {
-        BigInteger id = new BigInteger("-2");
+        BigInteger id = new BigInteger("1");
         String encoded = encode(id);
-        BigInteger decoded = decode("ZFN");
+//        BigInteger decoded = decode("ZFN");
 
         System.out.println("原始 ID: " + id);
         System.out.println("加密 ID: " + encoded);
-        System.out.println("解密 ID: " + decoded);
-        System.out.println("解密是否正确: " + id.equals(decoded));
+//        System.out.println("解密 ID: " + decoded);
+//        System.out.println("解密是否正确: " + id.equals(decoded));
     }
 }

@@ -147,4 +147,10 @@ public class UserServiceImpl implements UserService {
         userDao.updateByPrimaryKeySelective(user);
     }
 
+    @Override
+    public void batchStop(List<String> ids) {
+        List<Long> idList = ids.stream().map(i -> IdUtil.decode(i).longValue()).collect(Collectors.toList());
+        userDao.batchStopByIds(idList);
+    }
+
 }

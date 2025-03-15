@@ -96,4 +96,11 @@ public class UserController {
         List<String> pIds = userService.getExistPermission();
         return ResultDto.createSuccess(pIds);
     }
+
+    @PostMapping("/batchStop")
+    public ResultDto<Boolean> batchStop(@RequestBody List<String> ids){
+        System.out.println(ids);
+        userService.batchStop(ids);
+        return ResultDto.createSuccess(true);
+    }
 }

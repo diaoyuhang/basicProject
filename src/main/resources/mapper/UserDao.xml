@@ -252,4 +252,13 @@
       editor = #{editor,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <update id="batchStopByIds">
+    update user
+    set status = 0
+    where id in
+    <foreach collection='ids' open="(" close=")" item='id' index='index' separator=','>
+      #{id}
+    </foreach>
+  </update>
 </mapper>

@@ -19,7 +19,7 @@ public class UserReqDto {
     private String id;
     @NotEmpty(message = "工号不能为空", groups = {Select.class,Update.class, Insert.class})
     private String employeeId;
-    @NotEmpty(message = "密码不能为空", groups = {Select.class,Update.class, Insert.class})
+    @NotEmpty(message = "密码不能为空", groups = {Select.class, Insert.class})
     private String password;
     @NotEmpty(message = "名称不能为空", groups = {Update.class, Insert.class})
     private String name;
