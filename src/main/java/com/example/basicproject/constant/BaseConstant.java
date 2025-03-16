@@ -10,4 +10,5 @@ public class BaseConstant {
     public static final Long SYSTEM_USER_ID = 0L;
 
     public static final Long ROOT_USER_ID = 1L;
+    public static final Long ROOT_ROLE_ID = 1L;
 }

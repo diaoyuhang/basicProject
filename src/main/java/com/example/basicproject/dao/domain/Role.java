@@ -4,9 +4,13 @@ import java.util.Date;
 
 /**
  * role
- * @author 
+ *
+ * @author
  */
-public class Role{
+public class Role {
+    public static final Integer STOP_STATUS = 0;
+    public static final Integer START_STATUS = 1;
+
     /**
      * 主键
      */

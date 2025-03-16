@@ -33,7 +33,7 @@ public class UserResDto {
     /**
      * 头像|file.id
      */
-    private Long avatar;
+    private String avatar;
 
     /**
      * 用户邮箱
@@ -110,11 +110,11 @@ public class UserResDto {
         this.gender = gender;
     }
 
-    public Long getAvatar() {
+    public String getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(Long avatar) {
+    public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
 
@@ -176,8 +176,11 @@ public class UserResDto {
 
     public static UserResDto create(User user) {
         UserResDto userResDto = new UserResDto();
-        BeanUtils.copyProperties(user,userResDto,"id");
+        BeanUtils.copyProperties(user,userResDto,"id","avatar");
         userResDto.setId(IdUtil.encode(BigInteger.valueOf(user.getId())));
+        if (user.getAvatar()!=null) {
+            userResDto.setAvatar(IdUtil.encode(BigInteger.valueOf(user.getAvatar())));
+        }
 
         return userResDto;
     }

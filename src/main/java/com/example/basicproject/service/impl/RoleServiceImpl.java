@@ -1,15 +1,18 @@
 package com.example.basicproject.service.impl;
 
+import com.example.basicproject.constant.BaseConstant;
 import com.example.basicproject.dao.RoleDao;
 import com.example.basicproject.dao.RolePermissionDao;
 import com.example.basicproject.dao.UserRoleDao;
 import com.example.basicproject.dao.domain.Role;
 import com.example.basicproject.dao.domain.RolePermission;
+import com.example.basicproject.dao.domain.UserRole;
 import com.example.basicproject.dto.PageReqCondition;
 import com.example.basicproject.dto.Pagination;
 import com.example.basicproject.dto.role.RolePermissionReqDto;
 import com.example.basicproject.dto.role.RoleReqDto;
 import com.example.basicproject.dto.role.RoleResDto;
+import com.example.basicproject.dto.user.UserResDto;
 import com.example.basicproject.service.RoleService;
 import com.example.basicproject.utils.IdUtil;
 import com.example.basicproject.utils.UserHelperUtil;
@@ -18,6 +21,7 @@ import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
 import java.math.BigInteger;
@@ -77,6 +81,10 @@ public class RoleServiceImpl implements RoleService {
         Role role = roleReqDto.convertRole();
         UserHelperUtil.fillEditInfo(role);
         roleDao.updateByPrimaryKeySelective(role);
+
+        if(Role.STOP_STATUS.equals(role.getStatus())){
+            userRoleDao.deleteByRoleId(role.getId());
+        }
     }
 
     @Override
@@ -136,5 +144,12 @@ public class RoleServiceImpl implements RoleService {
             return new ArrayList<>();
         }
         return rolePermissionDao.selectPermissionIdByRoleIds(roleIds).stream().map(id ->IdUtil.encode(BigInteger.valueOf(id))).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> getUsersByRole(Long roleId) {
+        List<UserRole> userRoles = userRoleDao.selectByRoleId(roleId);
+        List<String> userIds = userRoles.stream().map(u->IdUtil.encode(BigInteger.valueOf(u.getUserId()))).collect(Collectors.toList());
+        return userIds;
     }
 }

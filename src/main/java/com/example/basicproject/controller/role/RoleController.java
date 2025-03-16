@@ -8,11 +8,13 @@ import com.example.basicproject.dto.role.PermissionResDto;
 import com.example.basicproject.dto.role.RolePermissionReqDto;
 import com.example.basicproject.dto.role.RoleReqDto;
 import com.example.basicproject.dto.role.RoleResDto;
+import com.example.basicproject.dto.user.UserResDto;
 import com.example.basicproject.dto.validGroup.Delete;
 import com.example.basicproject.dto.validGroup.Insert;
 import com.example.basicproject.dto.validGroup.Update;
 import com.example.basicproject.service.PermissionService;
 import com.example.basicproject.service.RoleService;
+import com.example.basicproject.utils.IdUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -106,5 +108,11 @@ public class RoleController {
     public ResultDto<List<String>> getExistPermission(String roleId){
         List<String> pIds = roleService.getExistPermissionByRoleId(roleId);
         return ResultDto.createSuccess(pIds);
+    }
+
+    @GetMapping("/getUsersByRole")
+    public ResultDto<List<String>> getUsersByRole(String roleId){
+        List<String> res = roleService.getUsersByRole(IdUtil.decode(roleId).longValue());
+        return ResultDto.createSuccess(res);
     }
 }

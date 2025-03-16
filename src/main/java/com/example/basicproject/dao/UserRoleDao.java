@@ -32,4 +32,5 @@ public interface UserRoleDao {
 
     void deleteByRoleId(Long roleId);
 
+    List<UserRole> selectByRoleId(Long roleId);
 }

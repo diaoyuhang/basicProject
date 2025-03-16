@@ -5,6 +5,7 @@ import com.example.basicproject.dto.Pagination;
 import com.example.basicproject.dto.role.RolePermissionReqDto;
 import com.example.basicproject.dto.role.RoleReqDto;
 import com.example.basicproject.dto.role.RoleResDto;
+import com.example.basicproject.dto.user.UserResDto;
 
 import java.util.List;
 
@@ -22,4 +23,6 @@ public interface RoleService {
     List<String> getExistPermissionByRoleId(String roleId);
 
     List<String> getPermissionIdRoleId(List<Long> roleIds);
+
+    List<String> getUsersByRole(Long roleId);
 }

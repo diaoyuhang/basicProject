@@ -56,7 +56,7 @@
     </delete>
   <delete id="deleteByPrimaryKeys">
     delete from role_permission
-    where id =
+    where id in
     <foreach collection='ids' open="(" close=")" item='id' index='index' separator=','>
       #{id,jdbcType=BIGINT}
     </foreach>
