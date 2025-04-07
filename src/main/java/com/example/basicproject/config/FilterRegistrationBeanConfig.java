@@ -17,7 +17,7 @@ public class FilterRegistrationBeanConfig {
         bean.addUrlPatterns("/*");
         bean.setOrder(2);
         bean.addInitParameter("excludedAccuratePaths","/user/login,/user/register");//需要排除的uri
-        bean.addInitParameter("excludedVaguePaths","/file/img/.*");//需要排除的uri
+        bean.addInitParameter("excludedVaguePaths","/file/img/.*,/test/.*");//需要排除的uri
         return bean;
     }
 

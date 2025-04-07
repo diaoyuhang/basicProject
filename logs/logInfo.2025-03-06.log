@@ -760,3 +760,25 @@ Caused by: java.sql.SQLException: Field 'create_time' doesn't have a default val
 2025-03-06 22:44:47.855 [tomcat-shutdown] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown - Graceful shutdown complete
 2025-03-06 22:44:47.857 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - hikari - Shutdown initiated...
 2025-03-06 22:44:47.861 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - hikari - Shutdown completed.
+2025-03-06 22:44:50.403 [background-preinit] INFO  org.hibernate.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-03-06 22:44:50.440 [main] INFO  com.example.basicproject.BasicProjectApplication - Starting BasicProjectApplication using Java 21.0.6 with PID 6100 (E:\project\basicProject\target\classes started by Diao YuHang in E:\project\basicProject)
+2025-03-06 22:44:50.441 [main] INFO  com.example.basicproject.BasicProjectApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-06 22:44:51.195 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-03-06 22:44:51.206 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-03-06 22:44:51.208 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2025-03-06 22:44:51.208 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-03-06 22:44:51.242 [main] INFO  o.a.c.c.ContainerBase.[Tomcat].[localhost].[/bp] - Initializing Spring embedded WebApplicationContext
+2025-03-06 22:44:51.242 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 766 ms
+2025-03-06 22:44:51.778 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-03-06 22:44:51.792 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/bp'
+2025-03-06 22:44:51.798 [main] INFO  com.example.basicproject.BasicProjectApplication - Started BasicProjectApplication in 1.66 seconds (process running for 2.247)
+2025-03-06 22:44:55.566 [http-nio-8080-exec-3] INFO  o.a.c.c.ContainerBase.[Tomcat].[localhost].[/bp] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-06 22:44:55.566 [http-nio-8080-exec-3] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-03-06 22:44:55.567 [http-nio-8080-exec-3] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2025-03-06 22:44:55.699 [http-nio-8080-exec-3] INFO  com.zaxxer.hikari.HikariDataSource - hikari - Starting...
+2025-03-06 22:44:55.826 [http-nio-8080-exec-3] INFO  com.zaxxer.hikari.pool.HikariPool - hikari - Added connection com.mysql.cj.jdbc.ConnectionImpl@51a93231
+2025-03-06 22:44:55.827 [http-nio-8080-exec-3] INFO  com.zaxxer.hikari.HikariDataSource - hikari - Start completed.
+2025-03-06 22:45:28.008 [SpringApplicationShutdownHook] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-03-06 22:45:28.014 [tomcat-shutdown] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-03-06 22:45:28.016 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - hikari - Shutdown initiated...
+2025-03-06 22:45:28.024 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - hikari - Shutdown completed.
