@@ -26,4 +26,7 @@ public interface UserDao {
     User selectByEmployeeIdAndPassword(User user);
 
     void batchStopByIds(List<Long> ids);
+
+    Integer countAll();
+
 }

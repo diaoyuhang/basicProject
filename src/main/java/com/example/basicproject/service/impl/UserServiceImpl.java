@@ -19,6 +19,7 @@ import com.example.basicproject.utils.SecretUtil;
 import com.example.basicproject.utils.UserHelperUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -39,6 +41,11 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
     private UserRoleDao userRoleDao;
     private RoleService roleService;
+    @PostConstruct
+    public void initMethod(){
+        Integer count = userDao.countAll();
+        log.info("查询用户数:"+count);
+    }
 
     @Autowired
     public void setRoleService(RoleService roleService) {
