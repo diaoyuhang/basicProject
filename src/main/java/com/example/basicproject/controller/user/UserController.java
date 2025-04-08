@@ -1,6 +1,7 @@
 package com.example.basicproject.controller.user;
 
 import com.example.basicproject.constant.Status;
+import com.example.basicproject.dao.domain.User;
 import com.example.basicproject.dto.PageReqCondition;
 import com.example.basicproject.dto.Pagination;
 import com.example.basicproject.dto.ResultDto;
@@ -11,6 +12,8 @@ import com.example.basicproject.dto.validGroup.Select;
 import com.example.basicproject.dto.validGroup.Update;
 import com.example.basicproject.service.PermissionService;
 import com.example.basicproject.service.UserService;
+import com.example.basicproject.utils.ReqThreadInfoUtil;
+import com.example.basicproject.utils.SecretUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -102,5 +105,10 @@ public class UserController {
         System.out.println(ids);
         userService.batchStop(ids);
         return ResultDto.createSuccess(true);
+    }
+    @GetMapping("/getUserInfo")
+    public ResultDto<UserResDto> getUserInfo(){
+        User user = ReqThreadInfoUtil.getUser();
+        return ResultDto.createSuccess(UserResDto.create(user));
     }
 }
