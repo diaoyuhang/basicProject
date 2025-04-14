@@ -1,10 +1,13 @@
 package com.example.basicproject.controller.user;
 
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONObject;
 import com.example.basicproject.constant.Status;
 import com.example.basicproject.dao.domain.User;
 import com.example.basicproject.dto.PageReqCondition;
 import com.example.basicproject.dto.Pagination;
 import com.example.basicproject.dto.ResultDto;
+import com.example.basicproject.dto.SheetDto;
 import com.example.basicproject.dto.user.UserReqDto;
 import com.example.basicproject.dto.user.UserResDto;
 import com.example.basicproject.dto.user.UserRoleReqInfo;
@@ -12,8 +15,12 @@ import com.example.basicproject.dto.validGroup.Select;
 import com.example.basicproject.dto.validGroup.Update;
 import com.example.basicproject.service.PermissionService;
 import com.example.basicproject.service.UserService;
+import com.example.basicproject.utils.DownloadUtils;
+import com.example.basicproject.utils.ExcelUtils;
 import com.example.basicproject.utils.ReqThreadInfoUtil;
 import com.example.basicproject.utils.SecretUtil;
+import jakarta.servlet.http.HttpServletResponse;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +29,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/user")
@@ -102,7 +113,6 @@ public class UserController {
 
     @PostMapping("/batchStop")
     public ResultDto<Boolean> batchStop(@RequestBody List<String> ids){
-        System.out.println(ids);
         userService.batchStop(ids);
         return ResultDto.createSuccess(true);
     }
@@ -110,5 +120,17 @@ public class UserController {
     public ResultDto<UserResDto> getUserInfo(){
         User user = ReqThreadInfoUtil.getUser();
         return ResultDto.createSuccess(UserResDto.create(user));
+    }
+
+    @GetMapping("/exportUserInfoExcel")
+    public void exportUserInfoExcel(HttpServletResponse response) throws IOException {
+        SheetDto sheetDto = UserResDto.excelSheetDto("用户信息");
+        PageReqCondition pageReqCondition = new PageReqCondition();
+        Pagination<List<UserResDto>> userList = userService.getUserList(pageReqCondition);
+        for (UserResDto userResDto : userList.getRecord()) {
+            sheetDto.getSheetCellData().add((JSONObject) JSON.toJSON(userResDto));
+        }
+        Workbook sheets = ExcelUtils.generateBook(sheetDto, null);
+        DownloadUtils.exportExcel(response,sheets, URLEncoder.encode("用户列表.xlsx", StandardCharsets.UTF_8));
     }
 }

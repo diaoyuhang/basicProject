@@ -1,7 +1,10 @@
 package com.example.basicproject.controller.test;
 
+import com.alibaba.fastjson.JSONObject;
 import com.example.basicproject.dto.ResultDto;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,5 +29,10 @@ public class TestController {
         }
 
         return ResultDto.createSuccess(res);
+    }
+
+    @PostMapping("/test1")
+    public ResultDto<String> test1(@RequestBody JSONObject jsonObject){
+        return ResultDto.createSuccess(jsonObject.toString());
     }
 }

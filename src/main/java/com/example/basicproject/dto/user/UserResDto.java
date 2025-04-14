@@ -1,11 +1,17 @@
 package com.example.basicproject.dto.user;
 
 import com.example.basicproject.dao.domain.User;
+import com.example.basicproject.dto.SheetDto;
 import com.example.basicproject.utils.IdUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class UserResDto {
     private String id;
@@ -69,6 +75,40 @@ public class UserResDto {
      * 修改人
      */
     private String editor;
+
+    public static SheetDto excelSheetDto(String sheetName) {
+        SheetDto sheetDto = new SheetDto();
+        if (StringUtils.isNotEmpty(sheetName)){
+            sheetDto.setSheetName(sheetName);
+        }else{
+            sheetDto.setSheetName("用户信息");
+        }
+
+        List<String> sheetCellHeadName = new ArrayList<>();
+        Map<String, String>  sheetCellHeadNameKey = new HashMap<>();
+        sheetDto.setSheetCellHeadName(sheetCellHeadName);
+        sheetDto.setSheetCellHeadNameKey(sheetCellHeadNameKey);
+
+        sheetCellHeadName.add("工号");
+        sheetCellHeadName.add("用户名");
+        sheetCellHeadName.add("性别|0-女，1-男");
+        sheetCellHeadName.add("邮箱");
+        sheetCellHeadName.add("部门");
+        sheetCellHeadName.add("状态|0-未激活，1-激活，2-停用");
+        sheetCellHeadName.add("创建时间");
+        sheetCellHeadName.add("修改时间");
+
+        sheetCellHeadNameKey.put("工号","employeeId");
+        sheetCellHeadNameKey.put("用户名","name");
+        sheetCellHeadNameKey.put("性别|0-女，1-男","gender");
+        sheetCellHeadNameKey.put("邮箱","email");
+        sheetCellHeadNameKey.put("部门","departmentId");
+        sheetCellHeadNameKey.put("状态|0-未激活，1-激活，2-停用","status");
+        sheetCellHeadNameKey.put("创建时间","createTime");
+        sheetCellHeadNameKey.put("修改时间","editTime");
+
+        return sheetDto;
+    }
 
     public String getId() {
         return id;
@@ -176,12 +216,14 @@ public class UserResDto {
 
     public static UserResDto create(User user) {
         UserResDto userResDto = new UserResDto();
-        BeanUtils.copyProperties(user,userResDto,"id","avatar");
+        BeanUtils.copyProperties(user, userResDto, "id", "avatar");
         userResDto.setId(IdUtil.encode(BigInteger.valueOf(user.getId())));
-        if (user.getAvatar()!=null) {
+        if (user.getAvatar() != null) {
             userResDto.setAvatar(IdUtil.encode(BigInteger.valueOf(user.getAvatar())));
         }
 
         return userResDto;
     }
+
+
 }

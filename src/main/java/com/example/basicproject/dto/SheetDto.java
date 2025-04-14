@@ -1,7 +1,9 @@
 package com.example.basicproject.dto;
 
-import com.alibaba.fastjson.JSONObject;
 
+import com.alibaba.fastjson2.JSONObject;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -11,7 +13,7 @@ public class SheetDto{
     private List<String> sheetCellHeadName;
     private Map<String,String> sheetCellHeadNameKey;
 
-    private List<JSONObject> sheetCellData;
+    private List<JSONObject> sheetCellData = new ArrayList<>();
 
     public Map<String, String> getSheetCellHeadNameKey() {
         return sheetCellHeadNameKey;
