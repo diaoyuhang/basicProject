@@ -125,10 +125,9 @@ public class UserController {
         return ResultDto.createSuccess(UserResDto.create(user));
     }
 
-    @GetMapping("/exportUserInfoExcel")
-    public void exportUserInfoExcel(HttpServletResponse response) throws IOException {
+    @PostMapping("/exportUserInfoExcel")
+    public void exportUserInfoExcel(HttpServletResponse response,@RequestBody PageReqCondition<UserReqDto> pageReqCondition) throws IOException {
         SheetDto sheetDto = UserResDto.excelSheetDto("用户信息");
-        PageReqCondition pageReqCondition = new PageReqCondition();
         Pagination<List<UserResDto>> userList = userService.getUserList(pageReqCondition);
         for (UserResDto userResDto : userList.getRecord()) {
             sheetDto.getSheetCellData().add((JSONObject) JSON.toJSON(userResDto));
