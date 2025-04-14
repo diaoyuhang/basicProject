@@ -42,13 +42,6 @@ public class MD5Util {
     }
 
     public static void main(String[] args) throws Exception {
-        String imagePath = "C:\\Users\\95190\\Downloads\\msedge_g9LDmVmSWd.png"; // 替换为你的图片路径
-        String imagePath2 = "C:\\Users\\95190\\Downloads\\msedge_g9LDmVmSWd - 副本.png"; // 替换为你的图片路径
-        File file = new File(imagePath);
-        FileInputStream fileInputStream = new FileInputStream(file);
-        System.out.println("MD5: " + getImageHash(fileInputStream));
-        File file2 = new File(imagePath2);
-        FileInputStream fileInputStream2 = new FileInputStream(file2);
-        System.out.println("MD5: " + getImageHash(fileInputStream2));
+        System.out.println(md5("123456"));
     }
 }
