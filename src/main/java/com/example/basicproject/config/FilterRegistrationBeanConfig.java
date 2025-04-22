@@ -16,8 +16,13 @@ public class FilterRegistrationBeanConfig {
         bean.setName("tokenFilter");
         bean.addUrlPatterns("/*");
         bean.setOrder(2);
-        bean.addInitParameter("excludedAccuratePaths","/user/login,/user/register,/user/exportUserInfoExcel,/user/importData");//需要排除的uri
-        bean.addInitParameter("excludedVaguePaths","/file/img/.*,/test/.*");//需要排除的uri
+        bean.addInitParameter("excludedAccuratePaths","/user/login," +
+                "/user/register," +
+                "/user/exportUserInfoExcel," +
+                "/user/importData");//需要排除的uri
+        bean.addInitParameter("excludedVaguePaths","/file/img/.*," +
+                "/test/.*," +
+                "/wx/.*");//需要排除的uri
         return bean;
     }
 

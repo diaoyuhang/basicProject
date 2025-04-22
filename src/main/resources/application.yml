@@ -32,3 +32,5 @@ pagehelper:
   support-methods-arguments: true
   params: count=countSql
   default-count: true
+wx_appId: wx61de14895a398796
+wx_appSecret: 54bbb1adbb559c8e55a3bf4608e287e5
