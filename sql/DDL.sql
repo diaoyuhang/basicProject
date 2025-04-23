@@ -183,10 +183,6 @@ create table wx_user
     creator      varchar(32)                            not null comment '创建人',
     editor       varchar(32)                            not null comment '修改人',
     rec_time     timestamp    default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP comment '时间戳',
-    constraint user_open_id
-        unique (open_id)
-)
-    comment '微信小程序用户' collate = utf8mb4_0900_ai_ci;
-
-create index wx_user_union_id
-    on wx_user (union_id);
+    UNIQUE INDEX user_open_id (open_id)
+)ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4 comment ='微信小程序用户';

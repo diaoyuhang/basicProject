@@ -1,5 +1,6 @@
 package com.example.basicproject.http;
 
+import com.example.basicproject.dto.user.WXUserResDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -26,9 +27,9 @@ public class WXApiHelper {
      * @param jsCode
      * @return
      */
-    public String jsCode2session(String jsCode){
+    public WXUserResDto jsCode2session(String jsCode){
         String url = String.format("https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code",appId,appSecret,jsCode);
-        ResponseEntity<String> response = wxRestTemplate.getForEntity(url, String.class);
+        ResponseEntity<WXUserResDto> response = wxRestTemplate.getForEntity(url, WXUserResDto.class);
 
         return response.getBody();
     }
