@@ -1,6 +1,6 @@
 package com.example.basicproject.http;
 
-import com.example.basicproject.dto.user.WXUserResDto;
+import com.example.basicproject.http.dto.WXUserResDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;

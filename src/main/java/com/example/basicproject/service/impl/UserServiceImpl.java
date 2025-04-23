@@ -12,6 +12,9 @@ import com.example.basicproject.dto.user.UserReqDto;
 import com.example.basicproject.dto.user.UserResDto;
 import com.example.basicproject.dto.user.UserRoleReqInfo;
 import com.example.basicproject.dto.user.UserTokenInfo;
+import com.example.basicproject.dto.user.WxUserTokenInfo;
+import com.example.basicproject.http.dto.WXUserResDto;
+import com.example.basicproject.http.WXApiHelper;
 import com.example.basicproject.service.RoleService;
 import com.example.basicproject.service.UserService;
 import com.example.basicproject.utils.IdUtil;
@@ -28,7 +31,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -41,10 +43,18 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
     private UserRoleDao userRoleDao;
     private RoleService roleService;
+
+    private WXApiHelper wxApiHelper;
+
     @PostConstruct
     public void initMethod(){
         Integer count = userDao.countAll();
         log.info("查询用户数:"+count);
+    }
+
+    @Autowired
+    public void setWxApiHelper(WXApiHelper wxApiHelper) {
+        this.wxApiHelper = wxApiHelper;
     }
 
     @Autowired
@@ -158,6 +168,12 @@ public class UserServiceImpl implements UserService {
     public void batchStop(List<String> ids) {
         List<Long> idList = ids.stream().map(i -> IdUtil.decode(i).longValue()).collect(Collectors.toList());
         userDao.batchStopByIds(idList);
+    }
+
+    @Override
+    public WxUserTokenInfo wxLogin(String jsCode) {
+        WXUserResDto wxUserResDto = wxApiHelper.jsCode2session(jsCode);
+        return WxUserTokenInfo.create(wxUserResDto);
     }
 
 }

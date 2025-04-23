@@ -28,9 +28,14 @@
     from wx_user
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <select id="selectByOpenId" resultType="com.example.basicproject.dao.domain.WxUser">
+        select *
+          from wx_user
+        where open_id = #{openId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from wx_user
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.example.basicproject.dao.domain.WxUser" useGeneratedKeys="true">
     insert into wx_user (union_id, open_id, nickname, 

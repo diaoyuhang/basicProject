@@ -1,4 +1,4 @@
-package com.example.basicproject.dto.user;
+package com.example.basicproject.http.dto;
 
 public class WXUserResDto {
 
