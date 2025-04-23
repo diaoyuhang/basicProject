@@ -4,20 +4,19 @@ import com.alibaba.fastjson.JSONObject;
 import com.example.basicproject.constant.BaseConstant;
 import com.example.basicproject.dao.UserDao;
 import com.example.basicproject.dao.UserRoleDao;
+import com.example.basicproject.dao.WxUserDao;
 import com.example.basicproject.dao.domain.User;
 import com.example.basicproject.dao.domain.UserRole;
+import com.example.basicproject.dao.domain.WxUser;
 import com.example.basicproject.dto.PageReqCondition;
 import com.example.basicproject.dto.Pagination;
-import com.example.basicproject.dto.user.UserReqDto;
-import com.example.basicproject.dto.user.UserResDto;
-import com.example.basicproject.dto.user.UserRoleReqInfo;
-import com.example.basicproject.dto.user.UserTokenInfo;
-import com.example.basicproject.dto.user.WxUserTokenInfo;
+import com.example.basicproject.dto.user.*;
 import com.example.basicproject.http.dto.WXUserResDto;
 import com.example.basicproject.http.WXApiHelper;
 import com.example.basicproject.service.RoleService;
 import com.example.basicproject.service.UserService;
 import com.example.basicproject.utils.IdUtil;
+import com.example.basicproject.utils.ReqThreadInfoUtil;
 import com.example.basicproject.utils.SecretUtil;
 import com.example.basicproject.utils.UserHelperUtil;
 import com.github.pagehelper.Page;
@@ -45,11 +44,17 @@ public class UserServiceImpl implements UserService {
     private RoleService roleService;
 
     private WXApiHelper wxApiHelper;
+    private WxUserDao wxUserDao;
 
     @PostConstruct
     public void initMethod(){
         Integer count = userDao.countAll();
         log.info("查询用户数:"+count);
+    }
+
+    @Autowired
+    public void setWxUserDao(WxUserDao wxUserDao) {
+        this.wxUserDao = wxUserDao;
     }
 
     @Autowired
@@ -173,7 +178,24 @@ public class UserServiceImpl implements UserService {
     @Override
     public WxUserTokenInfo wxLogin(String jsCode) {
         WXUserResDto wxUserResDto = wxApiHelper.jsCode2session(jsCode);
+        WxUser wxUser = wxUserDao.selectByOpenId(wxUserResDto.getOpenid());
+        if (wxUser == null ){
+            wxUser = new WxUser();
+            wxUser.setOpenId(wxUserResDto.getOpenid());
+            wxUser.setNickname("游客");
+            UserHelperUtil.fillCreateInfo(wxUser);
+            UserHelperUtil.fillEditInfo(wxUser);
+            wxUserDao.insertSelective(wxUser);
+        }
+
         return WxUserTokenInfo.create(wxUserResDto);
+    }
+
+    @Override
+    public WxUserInfoResDto getWxUserInfo() {
+        WxUserInfoDto user = (WxUserInfoDto) ReqThreadInfoUtil.getUser();
+        WxUser wxUser = wxUserDao.selectByOpenId(user.getOpenId());
+        return WxUserInfoResDto.create(wxUser);
     }
 
 }

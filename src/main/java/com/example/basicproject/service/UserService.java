@@ -2,10 +2,7 @@ package com.example.basicproject.service;
 
 import com.example.basicproject.dto.PageReqCondition;
 import com.example.basicproject.dto.Pagination;
-import com.example.basicproject.dto.user.UserReqDto;
-import com.example.basicproject.dto.user.UserResDto;
-import com.example.basicproject.dto.user.UserRoleReqInfo;
-import com.example.basicproject.dto.user.WxUserTokenInfo;
+import com.example.basicproject.dto.user.*;
 import com.example.basicproject.http.dto.WXUserResDto;
 
 import java.util.List;
@@ -26,4 +23,7 @@ public interface UserService {
     void batchStop(List<String> ids);
 
     WxUserTokenInfo wxLogin(String jsCode);
+
+    WxUserInfoResDto getWxUserInfo();
+
 }

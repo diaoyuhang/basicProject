@@ -31,6 +31,7 @@ public class WebConfig  implements WebMvcConfigurer {
                 .excludePathPatterns("/public/**","/user/login","/user/register","/wx/**"); // 排除特定路径
 
         registry.addInterceptor(wxReqThreadInterceptor)
-                .addPathPatterns("/wx/**");
+                .addPathPatterns("/wx/**")
+                .excludePathPatterns("/wx/user/login");
     }
 }

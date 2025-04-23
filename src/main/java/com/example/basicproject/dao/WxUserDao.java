@@ -1,9 +1,9 @@
 package com.example.basicproject.dao;
 
 import com.example.basicproject.dao.domain.WxUser;
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.Mapper;
 
-@Repository
+@Mapper
 public interface WxUserDao {
     int deleteByPrimaryKey(Long id);
 

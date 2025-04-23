@@ -27,7 +27,7 @@ public abstract class AbsTokenRule implements Filter {
     }
 
 
-    public Boolean isAuthWhiteList(String uri) {
+    protected Boolean isAuthWhiteList(String uri) {
         if (excludedAccuratePaths.contains(uri)) {
             return true;
         }

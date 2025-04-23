@@ -1,7 +1,6 @@
 package com.example.basicproject.filter;
 
 import com.alibaba.fastjson.JSONObject;
-import com.example.basicproject.dto.user.UserTokenInfo;
 import com.example.basicproject.dto.user.WxUserTokenInfo;
 import com.example.basicproject.utils.ReqThreadInfoUtil;
 import com.example.basicproject.utils.SecretUtil;

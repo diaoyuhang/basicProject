@@ -2,6 +2,7 @@ package com.example.basicproject.controller.wx;
 
 import com.alibaba.fastjson.JSONObject;
 import com.example.basicproject.dto.ResultDto;
+import com.example.basicproject.dto.user.WxUserInfoResDto;
 import com.example.basicproject.dto.user.WxUserTokenInfo;
 import com.example.basicproject.http.dto.WXUserResDto;
 import com.example.basicproject.service.UserService;
@@ -25,5 +26,11 @@ public class WXUserController{
     public ResultDto<String> wxLogin(String jsCode){
         WxUserTokenInfo wxUserTokenInfo = userService.wxLogin(jsCode);
         return ResultDto.createSuccess(SecretUtil.encrypt(JSONObject.toJSONString(wxUserTokenInfo)));
+    }
+
+    @GetMapping("/getUserInfo")
+    public ResultDto<WxUserInfoResDto> getUserInfo(){
+        WxUserInfoResDto wxUserInfoResDto = userService.getWxUserInfo();
+        return ResultDto.createSuccess(wxUserInfoResDto);
     }
 }

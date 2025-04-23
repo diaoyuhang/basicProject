@@ -13,8 +13,8 @@ public class WxUserTokenInfo {
 
     public static WxUserTokenInfo create(WXUserResDto wxUserResDto) {
         WxUserTokenInfo wxUserTokenInfo = new WxUserTokenInfo();
-        wxUserTokenInfo.setSessionKey(wxUserResDto.getSessionKey());
-        wxUserTokenInfo.setOpenId(wxUserResDto.getOpenId());
+        wxUserTokenInfo.setSessionKey(wxUserResDto.getSession_key());
+        wxUserTokenInfo.setOpenId(wxUserResDto.getOpenid());
 
         Date cur = new Date();
         Long expireTime = cur.getTime() + 7 * 24 * 60 * 60 * 1000L;
