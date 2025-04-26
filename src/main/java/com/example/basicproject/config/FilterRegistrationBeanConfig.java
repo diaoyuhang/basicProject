@@ -37,7 +37,7 @@ public class FilterRegistrationBeanConfig {
         bean.setOrder(3);
         bean.addInitParameter("excludedAccuratePaths","/wx/user/wxLogin");//需要排除的uri
 
-        bean.addInitParameter("excludedVaguePaths","/file/img/.*," +
+        bean.addInitParameter("excludedVaguePaths","/wx/file/img/.*," +
                 "/test/.*");//需要排除的uri
         return bean;
     }
