@@ -22,6 +22,7 @@ import com.example.basicproject.utils.UserHelperUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import jakarta.annotation.PostConstruct;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -196,6 +197,18 @@ public class UserServiceImpl implements UserService {
         WxUserInfoDto user = (WxUserInfoDto) ReqThreadInfoUtil.getUser();
         WxUser wxUser = wxUserDao.selectByOpenId(user.getOpenId());
         return WxUserInfoResDto.create(wxUser);
+    }
+
+    @Override
+    public void saveWxUserInfo(WxUserReqDto wxUserReqDto) {
+        WxUserInfoDto user = (WxUserInfoDto) ReqThreadInfoUtil.getUser();
+        WxUser wxUser = wxUserDao.selectByOpenId(user.getOpenId());
+        wxUser.setNickname(wxUserReqDto.getNickname());
+        if (!StringUtils.isEmpty(wxUserReqDto.getAvatar())){
+            wxUser.setAvatar(IdUtil.decode(wxUserReqDto.getAvatar()).longValue());
+        }
+        UserHelperUtil.fillEditInfo(wxUser);
+        wxUserDao.updateByPrimaryKey(wxUser);
     }
 
 }

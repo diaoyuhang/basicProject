@@ -26,4 +26,5 @@ public interface UserService {
 
     WxUserInfoResDto getWxUserInfo();
 
+    void saveWxUserInfo(WxUserReqDto wxUserReqDto);
 }

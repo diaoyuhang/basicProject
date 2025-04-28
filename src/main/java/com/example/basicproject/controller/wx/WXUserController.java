@@ -3,10 +3,7 @@ package com.example.basicproject.controller.wx;
 import com.alibaba.fastjson.JSONObject;
 import com.example.basicproject.dao.domain.User;
 import com.example.basicproject.dto.ResultDto;
-import com.example.basicproject.dto.user.WxUserEncryptedData;
-import com.example.basicproject.dto.user.WxUserInfoDto;
-import com.example.basicproject.dto.user.WxUserInfoResDto;
-import com.example.basicproject.dto.user.WxUserTokenInfo;
+import com.example.basicproject.dto.user.*;
 import com.example.basicproject.http.dto.WXUserResDto;
 import com.example.basicproject.service.UserService;
 import com.example.basicproject.utils.AES128CBCUtils;
@@ -48,5 +45,11 @@ public class WXUserController{
         byte[] ivBytes = Base64.getDecoder().decode(wxUserEncryptedData.getIv());
         byte[] keyBytes = Base64.getDecoder().decode(wxUserTokenInfo.getSessionKey());
         return ResultDto.createSuccess(AES128CBCUtils.decrypt(encryptedBytes,keyBytes,ivBytes));
+    }
+
+    @PostMapping("/saveUserInfo")
+    public ResultDto<Boolean> saveUserInfo(@RequestBody WxUserReqDto wxUserReqDto){
+        userService.saveWxUserInfo(wxUserReqDto);
+        return ResultDto.createSuccess(true);
     }
 }

@@ -35,8 +35,9 @@ public class WxUserInfoResDto {
 
     public static WxUserInfoResDto create(WxUser wxUser) {
         WxUserInfoResDto wxUserInfoResDto = new WxUserInfoResDto();
-        BeanUtils.copyProperties(wxUser,wxUserInfoResDto,"id");
+        BeanUtils.copyProperties(wxUser,wxUserInfoResDto,"id","avatar");
         wxUserInfoResDto.setId(IdUtil.encode(BigInteger.valueOf(wxUser.getId())));
+        wxUserInfoResDto.setAvatar(IdUtil.encode(BigInteger.valueOf(wxUser.getAvatar())));
 
         return wxUserInfoResDto;
     }
