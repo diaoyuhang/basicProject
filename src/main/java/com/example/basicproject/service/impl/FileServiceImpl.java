@@ -45,16 +45,25 @@ public class FileServiceImpl implements FileService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public String uploadImg(MultipartFile file) throws IOException {
-        DefaultPutRet defaultPutRet = qiniuApiHelper.uploadFile(file.getInputStream(), null);
+    public String uploadImg(MultipartFile file,String storageLocation) throws IOException {
+        String md5;
+        File fileInstance;
+        if (File.LOCAL_STORAGE_LOCATION.equals(storageLocation)){
+            byte[] content = file.getBytes();
+            md5 = MD5Util.getImageHash(file.getInputStream());
+            fileInstance = File.create(file.getOriginalFilename(), content, md5,storageLocation);
+        }else if (File.QN_STORAGE_LOCATION.equals(storageLocation)){
+            DefaultPutRet defaultPutRet = qiniuApiHelper.uploadFile(file.getInputStream(), null);
+            md5=defaultPutRet.hash;
+            fileInstance = File.create(file.getOriginalFilename(), null, md5,storageLocation);
+        }else{
+            throw new RuntimeException("不存在的存储位置");
+        }
 
-//        byte[] content = file.getBytes();
-//        String md5 = MD5Util.getImageHash(file.getInputStream());
-        Long id = fileDao.selectIdByMD5(defaultPutRet.hash);
+        Long id = fileDao.selectIdByMD5(md5);
         if (id!=null){
             return IdUtil.encode(BigInteger.valueOf(id));
         }
-        File fileInstance = File.create(file.getOriginalFilename(), null, defaultPutRet.hash);
         UserHelperUtil.fillEditInfo(fileInstance);
         UserHelperUtil.fillCreateInfo(fileInstance);
         fileDao.insert(fileInstance);
@@ -65,7 +74,13 @@ public class FileServiceImpl implements FileService {
     public void showImg(String id, HttpServletResponse response) throws IOException {
         File file = fileDao.selectByPrimaryKey(IdUtil.decode(id).longValue());
         Assert.notNull(file,"图片不存在");
-        byte[] bytes = qiniuApiHelper.downloadFile(file.getMd5());
+
+        byte[] bytes;
+        if (File.LOCAL_STORAGE_LOCATION.equals(file.getStorageLocation())){
+            bytes = file.getData();
+        }else{
+            bytes = qiniuApiHelper.downloadFile(file.getMd5());
+        }
         DownloadUtils.showPic(response, new ByteArrayInputStream(bytes));
     }
 }

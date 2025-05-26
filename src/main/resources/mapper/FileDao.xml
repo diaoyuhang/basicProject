@@ -12,13 +12,14 @@
     <result column="editor_id" jdbcType="BIGINT" property="editorId" />
     <result column="creator" jdbcType="VARCHAR" property="creator" />
     <result column="editor" jdbcType="VARCHAR" property="editor" />
+    <result column="storage_location" jdbcType="VARCHAR" property="storageLocation" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.example.basicproject.dao.domain.File">
     <result column="data" jdbcType="BLOB" property="data" />
   </resultMap>
   <sql id="Base_Column_List">
     id, file_name, file_type, md5, create_time, edit_time, creator_id, editor_id, creator, 
-    editor, rec_time
+    editor, storage_location
   </sql>
   <sql id="Blob_Column_List">
     `data`
@@ -46,11 +47,11 @@
     insert into file (file_name, file_type, md5, 
       create_time, edit_time, creator_id, 
       editor_id, creator, editor, 
-       `data`)
+       `data`,storage_location)
     values (#{fileName,jdbcType=VARCHAR}, #{fileType,jdbcType=VARCHAR}, #{md5,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{editTime,jdbcType=TIMESTAMP}, #{creatorId,jdbcType=BIGINT}, 
       #{editorId,jdbcType=BIGINT}, #{creator,jdbcType=VARCHAR}, #{editor,jdbcType=VARCHAR}, 
-       #{data,jdbcType=BLOB})
+       #{data,jdbcType=BLOB},#{storageLocation,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.example.basicproject.dao.domain.File" useGeneratedKeys="true">
     insert into file
@@ -85,6 +86,9 @@
       <if test="data != null">
         `data`,
       </if>
+      <if test="storageLocation != null">
+        storage_location,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="fileName != null">
@@ -116,6 +120,9 @@
       </if>
       <if test="data != null">
         #{data,jdbcType=BLOB},
+      </if>
+      <if test="storageLocation != null">
+        #{storageLocation,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -152,6 +159,9 @@
       <if test="data != null">
         `data` = #{data,jdbcType=BLOB},
       </if>
+      <if test="storageLocation != null">
+        storage_location,
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -166,7 +176,8 @@
       editor_id = #{editorId,jdbcType=BIGINT},
       creator = #{creator,jdbcType=VARCHAR},
       editor = #{editor,jdbcType=VARCHAR},
-      `data` = #{data,jdbcType=BLOB}
+      `data` = #{data,jdbcType=BLOB},
+        storage_location = #{storageLocation,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.example.basicproject.dao.domain.File">
@@ -179,7 +190,8 @@
       creator_id = #{creatorId,jdbcType=BIGINT},
       editor_id = #{editorId,jdbcType=BIGINT},
       creator = #{creator,jdbcType=VARCHAR},
-      editor = #{editor,jdbcType=VARCHAR}
+      editor = #{editor,jdbcType=VARCHAR},
+        storage_location = #{storageLocation,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

@@ -9,6 +9,9 @@ import java.util.Date;
  * @author 
  */
 public class File {
+
+    public static final String LOCAL_STORAGE_LOCATION="local";
+    public static final String QN_STORAGE_LOCATION="qn";
     /**
      * 主键
      */
@@ -64,17 +67,27 @@ public class File {
      */
     private byte[] data;
 
-    public static File create(String originalFilename,byte[] content, String md5){
+    private String storageLocation;
+    public static File create(String originalFilename,byte[] content, String md5,String storageLocation){
         File fileInstance = new File();
         fileInstance.setFileName(originalFilename);
         fileInstance.setData(content);
         fileInstance.setMd5(md5);
+        fileInstance.setStorageLocation(storageLocation);
         int index = originalFilename.lastIndexOf(BaseConstant.DOT_SEPARATOR);
         if (index>-1){
             fileInstance.setFileType(originalFilename.substring(index + 1).toLowerCase());
             fileInstance.setFileName(originalFilename.substring(0,index));
         }
         return fileInstance;
+    }
+
+    public String getStorageLocation() {
+        return storageLocation;
+    }
+
+    public void setStorageLocation(String storageLocation) {
+        this.storageLocation = storageLocation;
     }
 
     public Long getId() {

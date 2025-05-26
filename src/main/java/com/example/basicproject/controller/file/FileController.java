@@ -32,9 +32,10 @@ public class FileController {
     }
 
     @PostMapping("/uploadImg")
-    public ResultDto<String> uploadImg(@RequestParam("file") MultipartFile file) throws IOException {
+    public ResultDto<String> uploadImg(@RequestParam("file") MultipartFile file,
+                                       @RequestParam(defaultValue = "local") String storageLocation) throws IOException {
 
-        return ResultDto.createSuccess(fileService.uploadImg(file));
+        return ResultDto.createSuccess(fileService.uploadImg(file,storageLocation));
     }
 
 }

@@ -16,8 +16,8 @@ CREATE TABLE user
     email         varchar(64)           default '' comment '用户邮箱',
     department_id BIGINT                DEFAULT 0 comment '部门id',
     status        int          not null default 1 comment '状态|0-停用，1-激活',
-    creator_id      BIGINT      NOT NULL comment '创建人用户id',
-    editor_id       BIGINT      NOT NULL comment '修改人用户id',
+    creator_id    BIGINT       NOT NULL comment '创建人用户id',
+    editor_id     BIGINT       NOT NULL comment '修改人用户id',
     create_time   datetime     not null comment '创建时间',
     edit_time     datetime     not null comment '编辑时间',
     creator       varchar(32)  not null comment '创建人',
@@ -47,35 +47,37 @@ CREATE TABLE department
 
 CREATE TABLE file
 (
-    id          BIGINT AUTO_INCREMENT PRIMARY KEY comment '主键',
-    file_name   varchar(100) NOT NULL comment '文件名',
-    file_type   varchar(8)   not null comment '文件类型',
-    data        MEDIUMBLOB    comment '文件字节',
-    md5         varchar(100)          default '' comment 'md5标识',
-    create_time datetime     not null comment '创建时间',
-    edit_time   datetime     not null comment '编辑时间',
-    creator_id  BIGINT       NOT NULL comment '创建人用户id',
-    editor_id   BIGINT       NOT NULL comment '修改人用户id',
-    creator     varchar(32)  not null comment '创建人',
-    editor      varchar(32)  not null comment '修改人',
-    rec_time    timestamp    not null DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '时间戳',
+    id               BIGINT AUTO_INCREMENT PRIMARY KEY comment '主键',
+    file_name        varchar(100) NOT NULL comment '文件名',
+    file_type        varchar(8)   not null comment '文件类型',
+    data             MEDIUMBLOB comment '文件字节',
+    md5              varchar(100)          default '' comment 'md5标识',
+    storage_location varchar(8)   not null default 'local' comment '存储位置|local-本地数据库，qn-七牛云',
+    create_time      datetime     not null comment '创建时间',
+    edit_time        datetime     not null comment '编辑时间',
+    creator_id       BIGINT       NOT NULL comment '创建人用户id',
+    editor_id        BIGINT       NOT NULL comment '修改人用户id',
+    creator          varchar(32)  not null comment '创建人',
+    editor           varchar(32)  not null comment '修改人',
+    rec_time         timestamp    not null DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '时间戳',
     UNIQUE INDEX file_md5 (md5)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 comment ='文件';
 
 CREATE TABLE video
 (
-    id          BIGINT AUTO_INCREMENT PRIMARY KEY comment '主键',
-    video_name  varchar(100) NOT NULL comment '文件名',
-    video_type  varchar(8)   not null comment '文件类型',
-    data        LONGBLOB      comment '文件字节',
-    create_time datetime     not null comment '创建时间',
-    edit_time   datetime     not null comment '编辑时间',
-    creator_id  BIGINT       NOT NULL comment '创建人用户id',
-    editor_id   BIGINT       NOT NULL comment '修改人用户id',
-    creator     varchar(32)  not null comment '创建人',
-    editor      varchar(32)  not null comment '修改人',
-    rec_time    timestamp    not null DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '时间戳'
+    id               BIGINT AUTO_INCREMENT PRIMARY KEY comment '主键',
+    video_name       varchar(100) NOT NULL comment '文件名',
+    video_type       varchar(8)   not null comment '文件类型',
+    data             LONGBLOB comment '文件字节',
+    storage_location varchar(8)   not null default 'local' comment '存储位置|local-本地数据库，qn-七牛云',
+    create_time      datetime     not null comment '创建时间',
+    edit_time        datetime     not null comment '编辑时间',
+    creator_id       BIGINT       NOT NULL comment '创建人用户id',
+    editor_id        BIGINT       NOT NULL comment '修改人用户id',
+    creator          varchar(32)  not null comment '创建人',
+    editor           varchar(32)  not null comment '修改人',
+    rec_time         timestamp    not null DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '时间戳'
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 comment ='视频';
 
@@ -112,7 +114,7 @@ CREATE TABLE user_role
 CREATE TABLE permission
 (
     id          BIGINT PRIMARY KEY comment '主键',
-    parent_id    BIGINT      NOT NULL comment '父节点id|permission.id',
+    parent_id   BIGINT      NOT NULL comment '父节点id|permission.id',
     path        varchar(128)         DEFAULT '' comment '路径',
     title       varchar(32) NOT NULL comment '权限主题',
     type        int         not null comment '类型|1-菜单权限，2-按钮权限',
@@ -173,7 +175,7 @@ create table wx_user
     nickname     varchar(128)                           not null comment '微信昵称',
     name         varchar(128) default '游客' comment '用户姓名',
     phone_number varchar(32)  default '' comment '手机号',
-    gender       tinyint(1)   default 1                 not null comment '性别|0-女，1-男',
+    gender       tinyint(1) default 1 not null comment '性别|0-女，1-男',
     avatar       bigint       default 1                 not null comment '头像|file.id',
     status       int          default 1                 not null comment '状态|0-停用，1-激活',
     creator_id   bigint                                 not null comment '创建人用户id',
