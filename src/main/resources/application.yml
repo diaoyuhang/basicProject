@@ -2,11 +2,11 @@ spring:
   application:
     name: basic
   datasource:
-    url: jdbc:mysql://47.102.215.110:3308/basic?useUnicode=true&socketTimeout=10000&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://106.15.41.5:3306/basic?useUnicode=true&socketTimeout=10000&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
 #    url: jdbc:mysql://192.168.80.100:3306/basic?useSSL=false&autoReconnect=true&characterEncoding=utf8&allowPublicKeyRetrieval=true
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: a12345
+    password: 123456dyh
 #    password: 123456
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
@@ -35,3 +35,10 @@ pagehelper:
   default-count: true
 wx_appId: wx61de14895a398796
 wx_appSecret: 54bbb1adbb559c8e55a3bf4608e287e5
+qiniu:
+  config:
+    accessKeyProd: gqo0vqUYxEtd_7tkr8AT7UlNoBz4w_kzJvjBy6FT
+    secretKeyProd: WQbBD0FmtP7iWzhfqE0xAaKojBqHAbmeocOU5zRR
+    bucketProd: bpdyh
+    expireTime: 100
+    domain: http://bpdyh.clouddn.com

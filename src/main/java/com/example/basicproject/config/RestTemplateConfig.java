@@ -17,4 +17,12 @@ public class RestTemplateConfig {
                 .readTimeout(Duration.ofSeconds(30))
                 .build();
     }
+
+    @Bean
+    public RestTemplate qnRestTemplate(RestTemplateBuilder builder){
+        return builder
+                .connectTimeout(Duration.ofSeconds(30))
+                .readTimeout(Duration.ofSeconds(30))
+                .build();
+    }
 }

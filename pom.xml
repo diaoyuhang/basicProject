@@ -95,6 +95,12 @@
             <version>1.9.23</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.qiniu</groupId>
+            <artifactId>qiniu-java-sdk</artifactId>
+            <version>7.18.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>
