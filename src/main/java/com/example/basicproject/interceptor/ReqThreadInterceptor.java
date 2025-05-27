@@ -14,6 +14,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Date;
+
 @Component
 public class ReqThreadInterceptor implements HandlerInterceptor {
 
@@ -35,6 +37,16 @@ public class ReqThreadInterceptor implements HandlerInterceptor {
                 return false;
             }
             ReqThreadInfoUtil.setUser(user);
+
+            Long restTime = 15 * 60 * 1000L;
+            //如果token的过期时间就剩下不到15分钟的时间，需要给token续半小时
+            if (userTokenInfo.getExpirationTime().getTime() - new Date().getTime() < restTime) {
+                Long expireTime = new Date().getTime() + 30 * 60 * 1000L;
+                UserTokenInfo newUserTokenInfo = new UserTokenInfo(user.getId(), new Date(expireTime));
+                token = SecretUtil.encrypt(JSONObject.toJSONString(newUserTokenInfo));
+            }
+
+            response.addHeader("token", "abcdefg");
         }
 
         return true;

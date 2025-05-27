@@ -111,7 +111,7 @@ public class UserServiceImpl implements UserService {
         Assert.isTrue(userInfo.getStatus().equals(user.OPEN_STATUS),"用户已被停用");
 
         Date cur = new Date();
-        Long expireTime = cur.getTime() + 7 * 24 * 60 * 60 * 1000L;
+        Long expireTime = cur.getTime() + 24 * 60 * 60 * 1000L;
 
         UserTokenInfo userTokenInfo = new UserTokenInfo(userInfo.getId(), new Date(expireTime));
 
