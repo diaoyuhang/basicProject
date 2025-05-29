@@ -166,13 +166,13 @@ CREATE TABLE user_permission
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 comment ='用户权限关联表';
 
-create table wx_user
+create table core_user
 (
     id           bigint auto_increment comment '主键'
         primary key,
-    union_id     varchar(32)  default '' comment '微信开放平台账号下的唯一标识',
-    open_id      varchar(32)                            not null comment '微信小程序open_id',
-    nickname     varchar(128)                           not null comment '微信昵称',
+    union_id     varchar(32)  default null comment '微信开放平台账号下的唯一标识',
+    open_id      varchar(32)  default null comment '微信小程序open_id',
+    nickname     varchar(128)                           not null comment '昵称',
     name         varchar(128) default '游客' comment '用户姓名',
     phone_number varchar(32)  default '' comment '手机号',
     gender       tinyint(1) default 1 not null comment '性别|0-女，1-男',
@@ -187,4 +187,4 @@ create table wx_user
     rec_time     timestamp    default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP comment '时间戳',
     UNIQUE INDEX user_open_id (open_id)
 )ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4 comment ='微信小程序用户';
+  DEFAULT CHARSET = utf8mb4 comment ='前台用户';

@@ -1,11 +1,10 @@
 package com.example.basicproject.dto.user;
 
-import com.example.basicproject.dao.domain.WxUser;
+import com.example.basicproject.dao.domain.CoreUser;
 import com.example.basicproject.utils.IdUtil;
 import org.springframework.beans.BeanUtils;
 
 import java.math.BigInteger;
-import java.util.Date;
 
 public class WxUserInfoResDto {
     private String id;
@@ -33,11 +32,11 @@ public class WxUserInfoResDto {
      */
     private Integer status;
 
-    public static WxUserInfoResDto create(WxUser wxUser) {
+    public static WxUserInfoResDto create(CoreUser coreUser) {
         WxUserInfoResDto wxUserInfoResDto = new WxUserInfoResDto();
-        BeanUtils.copyProperties(wxUser,wxUserInfoResDto,"id","avatar");
-        wxUserInfoResDto.setId(IdUtil.encode(BigInteger.valueOf(wxUser.getId())));
-        wxUserInfoResDto.setAvatar(IdUtil.encode(BigInteger.valueOf(wxUser.getAvatar())));
+        BeanUtils.copyProperties(coreUser,wxUserInfoResDto,"id","avatar");
+        wxUserInfoResDto.setId(IdUtil.encode(BigInteger.valueOf(coreUser.getId())));
+        wxUserInfoResDto.setAvatar(IdUtil.encode(BigInteger.valueOf(coreUser.getAvatar())));
 
         return wxUserInfoResDto;
     }

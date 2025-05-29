@@ -1,7 +1,7 @@
 package com.example.basicproject.config;
 
 import com.example.basicproject.interceptor.ReqThreadInterceptor;
-import com.example.basicproject.interceptor.WxReqThreadInterceptor;
+import com.example.basicproject.interceptor.CoreReqThreadInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -12,11 +12,11 @@ public class WebConfig  implements WebMvcConfigurer {
 
     private ReqThreadInterceptor reqThreadInterceptor;
 
-    private WxReqThreadInterceptor wxReqThreadInterceptor;
+    private CoreReqThreadInterceptor coreReqThreadInterceptor;
 
     @Autowired
-    public void setWxReqThreadInterceptor(WxReqThreadInterceptor wxReqThreadInterceptor) {
-        this.wxReqThreadInterceptor = wxReqThreadInterceptor;
+    public void setWxReqThreadInterceptor(CoreReqThreadInterceptor coreReqThreadInterceptor) {
+        this.coreReqThreadInterceptor = coreReqThreadInterceptor;
     }
 
     @Autowired
@@ -27,11 +27,11 @@ public class WebConfig  implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(reqThreadInterceptor)
-                .addPathPatterns("/**") // 拦截所有路径
-                .excludePathPatterns("/public/**","/user/login","/user/register","/wx/**"); // 排除特定路径
+                .addPathPatterns("/bk/**") // 拦截所有路径
+                .excludePathPatterns("/public/**","/bk/user/login","/bk/user/register"); // 排除特定路径
 
-        registry.addInterceptor(wxReqThreadInterceptor)
-                .addPathPatterns("/wx/**")
+        registry.addInterceptor(coreReqThreadInterceptor)
+                .addPathPatterns("/fr/**")
                 .excludePathPatterns("/wx/user/login");
     }
 }

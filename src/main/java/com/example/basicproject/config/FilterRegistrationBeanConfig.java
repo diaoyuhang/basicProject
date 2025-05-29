@@ -1,8 +1,8 @@
 package com.example.basicproject.config;
 
 import com.example.basicproject.filter.StaticResourceFilter;
-import com.example.basicproject.filter.TokenFilter;
-import com.example.basicproject.filter.WXTokenFilter;
+import com.example.basicproject.filter.BackendTokenFilter;
+import com.example.basicproject.filter.FrontTokenFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,33 +11,31 @@ import org.springframework.context.annotation.Configuration;
 public class FilterRegistrationBeanConfig {
 
     @Bean
-    public FilterRegistrationBean<TokenFilter> registerTokenFilter(){
-        FilterRegistrationBean<TokenFilter> bean = new FilterRegistrationBean<>();
-        bean.setFilter(new TokenFilter());
+    public FilterRegistrationBean<BackendTokenFilter> registerTokenFilter(){
+        FilterRegistrationBean<BackendTokenFilter> bean = new FilterRegistrationBean<>();
+        bean.setFilter(new BackendTokenFilter());
         bean.setName("tokenFilter");
-        bean.addUrlPatterns("/*");
+        bean.addUrlPatterns("/bk/*");
         bean.setOrder(2);
-        bean.addInitParameter("excludedAccuratePaths","/user/login," +
-                "/user/register," +
-                "/user/exportUserInfoExcel," +
-                "/user/importData");//需要排除的uri
+        bean.addInitParameter("excludedAccuratePaths","/bk/user/login," +
+                "/bk/user/register," +
+                "/bk/user/exportUserInfoExcel," +
+                "/bk/user/importData");//需要排除的uri
 
-        bean.addInitParameter("excludedVaguePaths","/file/img/.*," +
-                "/test/.*," +
-                "/wx/.*");//需要排除的uri
+        bean.addInitParameter("excludedVaguePaths","/file/img/.*,/test/.*,");//需要排除的uri
         return bean;
     }
 
     @Bean
-    public FilterRegistrationBean<WXTokenFilter> registerWXTokenFilter(){
-        FilterRegistrationBean<WXTokenFilter> bean = new FilterRegistrationBean<>();
-        bean.setFilter(new WXTokenFilter());
+    public FilterRegistrationBean<FrontTokenFilter> registerWXTokenFilter(){
+        FilterRegistrationBean<FrontTokenFilter> bean = new FilterRegistrationBean<>();
+        bean.setFilter(new FrontTokenFilter());
         bean.setName("wXTokenFilter");
-        bean.addUrlPatterns("/wx/*");
+        bean.addUrlPatterns("/fr/*");
         bean.setOrder(3);
-        bean.addInitParameter("excludedAccuratePaths","/wx/user/wxLogin");//需要排除的uri
+        bean.addInitParameter("excludedAccuratePaths","/fr/user/wxLogin");//需要排除的uri
 
-        bean.addInitParameter("excludedVaguePaths","/wx/file/img/.*," +
+        bean.addInitParameter("excludedVaguePaths","/fr/file/img/.*," +
                 "/test/.*");//需要排除的uri
         return bean;
     }
