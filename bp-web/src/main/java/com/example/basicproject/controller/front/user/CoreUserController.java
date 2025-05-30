@@ -1,4 +1,4 @@
-package com.example.basicproject.controller.front.wx;
+package com.example.basicproject.controller.front.user;
 
 import com.alibaba.fastjson.JSONObject;
 import com.example.basicproject.dto.ResultDto;
