@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.basicproject.dao.DepartmentDao">
+  <resultMap id="BaseResultMap" type="com.example.basicproject.domain.Department">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="parent_id" jdbcType="VARCHAR" property="parentId" />
+    <result column="department_name" jdbcType="VARCHAR" property="departmentName" />
+    <result column="level" jdbcType="INTEGER" property="level" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="creator_id" jdbcType="BIGINT" property="creatorId" />
+    <result column="editor_id" jdbcType="BIGINT" property="editorId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="edit_time" jdbcType="TIMESTAMP" property="editTime" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="editor" jdbcType="VARCHAR" property="editor" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, parent_id, department_name, `level`, `status`, creator_id, editor_id, create_time, 
+    edit_time, creator, editor
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from department
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from department
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.example.basicproject.domain.Department" useGeneratedKeys="true">
+    insert into department (parent_id, department_name, `level`, 
+      `status`, creator_id, editor_id, 
+      create_time, edit_time, creator, 
+      editor)
+    values (#{parentId,jdbcType=VARCHAR}, #{departmentName,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER}, #{creatorId,jdbcType=BIGINT}, #{editorId,jdbcType=BIGINT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{editTime,jdbcType=TIMESTAMP}, #{creator,jdbcType=VARCHAR}, 
+      #{editor,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.example.basicproject.domain.Department" useGeneratedKeys="true">
+    insert into department
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="departmentName != null">
+        department_name,
+      </if>
+      <if test="level != null">
+        `level`,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="creatorId != null">
+        creator_id,
+      </if>
+      <if test="editorId != null">
+        editor_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="editTime != null">
+        edit_time,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="editor != null">
+        editor,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="parentId != null">
+        #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentName != null">
+        #{departmentName,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null">
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="creatorId != null">
+        #{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="editorId != null">
+        #{editorId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="editTime != null">
+        #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="editor != null">
+        #{editor,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.basicproject.domain.Department">
+    update department
+    <set>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentName != null">
+        department_name = #{departmentName,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null">
+        `level` = #{level,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="creatorId != null">
+        creator_id = #{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="editorId != null">
+        editor_id = #{editorId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="editTime != null">
+        edit_time = #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="editor != null">
+        editor = #{editor,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.basicproject.domain.Department">
+    update department
+    set parent_id       = #{parentId,jdbcType=VARCHAR},
+        department_name = #{departmentName,jdbcType=VARCHAR},
+        `level`         = #{level,jdbcType=INTEGER},
+        `status`        = #{status,jdbcType=INTEGER},
+        creator_id      = #{creatorId,jdbcType=BIGINT},
+        editor_id       = #{editorId,jdbcType=BIGINT},
+        create_time     = #{createTime,jdbcType=TIMESTAMP},
+        edit_time       = #{editTime,jdbcType=TIMESTAMP},
+        creator         = #{creator,jdbcType=VARCHAR},
+        editor          = #{editor,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

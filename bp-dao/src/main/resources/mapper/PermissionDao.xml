@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.basicproject.dao.PermissionDao">
+  <resultMap id="BaseResultMap" type="com.example.basicproject.domain.Permission">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+    <result column="path" jdbcType="VARCHAR" property="path" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="level" jdbcType="INTEGER" property="level" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="edit_time" jdbcType="TIMESTAMP" property="editTime" />
+    <result column="creator_id" jdbcType="BIGINT" property="creatorId" />
+    <result column="editor_id" jdbcType="BIGINT" property="editorId" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="editor" jdbcType="VARCHAR" property="editor" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, parent_id, `path`, title, `type`, `level`, `status`, create_time, edit_time, creator_id, 
+    editor_id, creator, editor, rec_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from permission
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+    <select id="selectCountByPermissionIdAndUserId" resultType="java.lang.Integer">
+      select count(1)
+      from user t1
+      where t1.id =  #{userId,jdbcType=BIGINT}
+        and exists(select *
+                   from user_role t2
+                   where t2.user_id = t1.id
+                     and exists(select * from role_permission t3 where t3.permission_id =  #{permissionId,jdbcType=BIGINT} and t3.role_id = t2.role_id))
+    </select>
+    <select id="selectAll" resultType="com.example.basicproject.domain.Permission">
+      select * from
+        permission
+      where status = 1
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from permission
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.example.basicproject.domain.Permission" useGeneratedKeys="true">
+    insert into permission (parent_id, `path`, title, 
+      `type`, `level`, `status`, 
+      create_time, edit_time, creator_id, 
+      editor_id, creator, editor)
+    values (#{parent_id,jdbcType=BIGINT}, #{path,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{type,jdbcType=INTEGER}, #{level,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{editTime,jdbcType=TIMESTAMP}, #{creatorId,jdbcType=BIGINT}, 
+      #{editorId,jdbcType=BIGINT}, #{creator,jdbcType=VARCHAR}, #{editor,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.example.basicproject.domain.Permission" useGeneratedKeys="true">
+    insert into permission
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="parent_id != null">
+        parent_id,
+      </if>
+      <if test="path != null">
+        `path`,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="type != null">
+        `type`,
+      </if>
+      <if test="level != null">
+        `level`,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="editTime != null">
+        edit_time,
+      </if>
+      <if test="creatorId != null">
+        creator_id,
+      </if>
+      <if test="editorId != null">
+        editor_id,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="editor != null">
+        editor,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="parentId != null">
+        #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="path != null">
+        #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="level != null">
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="editTime != null">
+        #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorId != null">
+        #{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="editorId != null">
+        #{editorId,jdbcType=BIGINT},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="editor != null">
+        #{editor,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.basicproject.domain.Permission">
+    update permission
+    <set>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="path != null">
+        `path` = #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        `type` = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="level != null">
+        `level` = #{level,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="editTime != null">
+        edit_time = #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorId != null">
+        creator_id = #{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="editorId != null">
+        editor_id = #{editorId,jdbcType=BIGINT},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="editor != null">
+        editor = #{editor,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.basicproject.domain.Permission">
+    update permission
+    set parent_id = #{parentId,jdbcType=BIGINT},
+      `path` = #{path,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      `type` = #{type,jdbcType=INTEGER},
+      `level` = #{level,jdbcType=INTEGER},
+      `status` = #{status,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      edit_time = #{editTime,jdbcType=TIMESTAMP},
+      creator_id = #{creatorId,jdbcType=BIGINT},
+      editor_id = #{editorId,jdbcType=BIGINT},
+      creator = #{creator,jdbcType=VARCHAR},
+      editor = #{editor,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

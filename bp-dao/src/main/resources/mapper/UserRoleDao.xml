@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.basicproject.dao.UserRoleDao">
+  <resultMap id="BaseResultMap" type="com.example.basicproject.domain.UserRole">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="role_id" jdbcType="BIGINT" property="roleId" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="edit_time" jdbcType="TIMESTAMP" property="editTime" />
+    <result column="creator_id" jdbcType="BIGINT" property="creatorId" />
+    <result column="editor_id" jdbcType="BIGINT" property="editorId" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="editor" jdbcType="VARCHAR" property="editor" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, role_id, user_id, create_time, edit_time, creator_id, editor_id, creator, editor
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user_role
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByUserId" resultType="com.example.basicproject.domain.UserRole">
+    select * from
+                 user_role
+     where user_id = #{userId,jdbcType=BIGINT}
+  </select>
+
+    <select id="selectByRoleId" resultType="com.example.basicproject.domain.UserRole">
+      select * from
+        user_role
+      where role_id = #{roleId}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from user_role
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+    <delete id="deleteByUserId">
+        delete from user_role
+        where user_id = #{userId,jdbcType=BIGINT}
+
+    </delete>
+
+  <delete id="deleteByPrimaryKeys">
+    delete from user_role
+    where id in
+    <foreach collection='ids' open="(" close=")" item='id' index='index' separator=','>
+      #{id}
+    </foreach>
+  </delete>
+
+    <delete id="deleteByRoleId">
+      delete from user_role
+      where role_id = #{roleId,jdbcType=BIGINT}
+    </delete>
+
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.example.basicproject.domain.UserRole" useGeneratedKeys="true">
+    insert into user_role (role_id, user_id, create_time, 
+      edit_time, creator_id, editor_id, 
+      creator, editor
+      )
+    values (#{roleId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{editTime,jdbcType=TIMESTAMP}, #{creatorId,jdbcType=BIGINT}, #{editorId,jdbcType=BIGINT}, 
+      #{creator,jdbcType=VARCHAR}, #{editor,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.example.basicproject.domain.UserRole" useGeneratedKeys="true">
+    insert into user_role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="roleId != null">
+        role_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="editTime != null">
+        edit_time,
+      </if>
+      <if test="creatorId != null">
+        creator_id,
+      </if>
+      <if test="editorId != null">
+        editor_id,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="editor != null">
+        editor,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="roleId != null">
+        #{roleId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="editTime != null">
+        #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorId != null">
+        #{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="editorId != null">
+        #{editorId,jdbcType=BIGINT},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="editor != null">
+        #{editor,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <insert id="batchInsert">
+    insert into user_role
+    (role_id, user_id, create_time,
+     edit_time, creator_id, editor_id,
+     creator, editor
+    )
+    values
+    <foreach collection='userRoles' item='userRole' index='index' separator=','>
+        (#{userRole.roleId,jdbcType=BIGINT}, #{userRole.userId,jdbcType=BIGINT}, #{userRole.createTime,jdbcType=TIMESTAMP},
+            #{userRole.editTime,jdbcType=TIMESTAMP}, #{userRole.creatorId,jdbcType=BIGINT}, #{userRole.editorId,jdbcType=BIGINT},
+            #{userRole.creator,jdbcType=VARCHAR}, #{userRole.editor,jdbcType=VARCHAR}
+           )
+    </foreach>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.basicproject.domain.UserRole">
+    update user_role
+    <set>
+      <if test="roleId != null">
+        role_id = #{roleId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="editTime != null">
+        edit_time = #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorId != null">
+        creator_id = #{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="editorId != null">
+        editor_id = #{editorId,jdbcType=BIGINT},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="editor != null">
+        editor = #{editor,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.basicproject.domain.UserRole">
+    update user_role
+    set role_id = #{roleId,jdbcType=BIGINT},
+      user_id = #{userId,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      edit_time = #{editTime,jdbcType=TIMESTAMP},
+      creator_id = #{creatorId,jdbcType=BIGINT},
+      editor_id = #{editorId,jdbcType=BIGINT},
+      creator = #{creator,jdbcType=VARCHAR},
+      editor = #{editor,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
