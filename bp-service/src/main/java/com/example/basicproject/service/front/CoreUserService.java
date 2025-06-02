@@ -1,7 +1,7 @@
 package com.example.basicproject.service.front;
 
 import com.example.basicproject.dto.user.WxUserInfoResDto;
-import com.example.basicproject.dto.user.WxUserReqDto;
+import com.example.basicproject.dto.user.CoreUserReqDto;
 import com.example.basicproject.dto.user.CoreUserTokenInfo;
 
 public interface CoreUserService {
@@ -9,5 +9,5 @@ public interface CoreUserService {
 
     WxUserInfoResDto getUserInfo();
 
-    void saveUserInfo(WxUserReqDto wxUserReqDto);
+    void saveUserInfo(CoreUserReqDto coreUserReqDto);
 }

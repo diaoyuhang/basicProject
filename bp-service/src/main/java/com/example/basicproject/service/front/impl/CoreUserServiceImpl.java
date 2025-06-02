@@ -4,7 +4,7 @@ import com.example.basicproject.dao.CoreUserDao;
 import com.example.basicproject.domain.CoreUser;
 import com.example.basicproject.dto.user.CoreUserInfoDto;
 import com.example.basicproject.dto.user.WxUserInfoResDto;
-import com.example.basicproject.dto.user.WxUserReqDto;
+import com.example.basicproject.dto.user.CoreUserReqDto;
 import com.example.basicproject.dto.user.CoreUserTokenInfo;
 import com.example.basicproject.http.WXApiHelper;
 import com.example.basicproject.api.dto.WXUserResDto;
@@ -58,12 +58,15 @@ public class CoreUserServiceImpl implements CoreUserService {
     }
 
     @Override
-    public void saveUserInfo(WxUserReqDto wxUserReqDto) {
+    public void saveUserInfo(CoreUserReqDto coreUserReqDto) {
         CoreUserInfoDto user = (CoreUserInfoDto) ReqThreadInfoUtil.getUser();
-        CoreUser coreUser = coreUserDao.selectByOpenId(user.getOpenId());
-        coreUser.setNickname(wxUserReqDto.getNickname());
-        if (!StringUtils.isEmpty(wxUserReqDto.getAvatar())) {
-            coreUser.setAvatar(IdUtil.decode(wxUserReqDto.getAvatar()).longValue());
+        CoreUser coreUser = coreUserDao.selectByPrimaryKey(user.getId());
+        coreUser.setNickname(coreUserReqDto.getNickname());
+        coreUser.setName(coreUserReqDto.getName());
+        coreUser.setPhoneNumber(coreUserReqDto.getPhoneNumber());
+
+        if (!StringUtils.isEmpty(coreUserReqDto.getAvatar())) {
+            coreUser.setAvatar(IdUtil.decode(coreUserReqDto.getAvatar()).longValue());
         }
         UserHelperUtil.fillEditInfo(coreUser);
         coreUserDao.updateByPrimaryKey(coreUser);

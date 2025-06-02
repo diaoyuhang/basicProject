@@ -1,0 +1,9 @@
+qiniu:
+  config:
+    accessKeyProd: gqo0vqUYxEtd_7tkr8AT7UlNoBz4w_kzJvjBy6FT
+    secretKeyProd: WQbBD0FmtP7iWzhfqE0xAaKojBqHAbmeocOU5zRR
+    bucketProd: bpdyh
+    expireTime: 100
+    domain: http://bpdyh.clouddn.com
+wx_appId: wx61de14895a398796
+wx_appSecret: 54bbb1adbb559c8e55a3bf4608e287e5

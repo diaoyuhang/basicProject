@@ -1,9 +1,28 @@
 package com.example.basicproject.dto.user;
 
-public class WxUserReqDto {
+public class CoreUserReqDto {
 
     private String avatar;
     private String nickname;
+    private String phoneNumber;
+
+    private String name;
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getAvatar() {
         return avatar;

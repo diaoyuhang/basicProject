@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.example.basicproject.dto.ResultDto;
 import com.example.basicproject.dto.user.WxUserEncryptedData;
 import com.example.basicproject.dto.user.WxUserInfoResDto;
-import com.example.basicproject.dto.user.WxUserReqDto;
+import com.example.basicproject.dto.user.CoreUserReqDto;
 import com.example.basicproject.dto.user.CoreUserTokenInfo;
 import com.example.basicproject.service.front.CoreUserService;
 import com.example.basicproject.utils.AES128CBCUtils;
@@ -53,8 +53,8 @@ public class CoreUserController {
     }
 
     @PostMapping("/saveUserInfo")
-    public ResultDto<Boolean> saveUserInfo(@RequestBody WxUserReqDto wxUserReqDto) {
-        coreUserService.saveUserInfo(wxUserReqDto);
+    public ResultDto<Boolean> saveUserInfo(@RequestBody CoreUserReqDto coreUserReqDto) {
+        coreUserService.saveUserInfo(coreUserReqDto);
         return ResultDto.createSuccess(true);
     }
 }
