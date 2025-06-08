@@ -22,7 +22,7 @@ public class FilterRegistrationBeanConfig {
                 "/bk/user/exportUserInfoExcel," +
                 "/bk/user/importData");//需要排除的uri
 
-        bean.addInitParameter("excludedVaguePaths","/file/img/.*,/test/.*,");//需要排除的uri
+        bean.addInitParameter("excludedVaguePaths","/bk/file/img/.*,/test/.*,");//需要排除的uri
         return bean;
     }
 
