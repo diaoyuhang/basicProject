@@ -1,6 +1,7 @@
 package com.example.basicproject.dto.user;
 
 import com.example.basicproject.domain.User;
+import com.example.basicproject.dto.BaseConditionDto;
 import com.example.basicproject.dto.validGroup.Delete;
 import com.example.basicproject.dto.validGroup.Insert;
 import com.example.basicproject.dto.validGroup.Select;
@@ -10,11 +11,14 @@ import com.example.basicproject.utils.MD5Util;
 import io.micrometer.common.util.StringUtils;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.Date;
 import java.util.List;
 
-public class UserReqDto {
+@Data
+public class UserReqDto extends BaseConditionDto {
     @NotEmpty(message = "用户id不能为空", groups = {Update.class, Delete.class})
     private String id;
     @NotEmpty(message = "工号不能为空", groups = {Select.class,Update.class, Insert.class})
@@ -33,99 +37,6 @@ public class UserReqDto {
     @NotNull(message = "用户状态必填",groups = {Insert.class, Update.class})
     private Integer status;
 
-    private List<Date> editTimeRange;
-
-    private String sortField;
-
-    private String sortOrder;
-
-    public String getSortField() {
-        return sortField;
-    }
-
-    public void setSortField(String sortField) {
-        this.sortField = sortField;
-    }
-
-    public String getSortOrder() {
-        return sortOrder;
-    }
-
-    public void setSortOrder(String sortOrder) {
-        this.sortOrder = sortOrder;
-    }
-
-    public List<Date> getEditTimeRange() {
-        return editTimeRange;
-    }
-
-    public void setEditTimeRange(List<Date> editTimeRange) {
-        this.editTimeRange = editTimeRange;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getGender() {
-        return gender;
-    }
-
-    public void setGender(Integer gender) {
-        this.gender = gender;
-    }
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getEmployeeId() {
-        return employeeId;
-    }
-
-    public void setEmployeeId(String employeeId) {
-        this.employeeId = employeeId;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     public User convertUser() {
         User user = new User();
