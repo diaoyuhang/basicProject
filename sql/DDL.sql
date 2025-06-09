@@ -203,4 +203,5 @@ create table sys_config
     editor       varchar(32)                            not null comment '修改人',
     rec_time     timestamp    default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP comment '时间戳',
     UNIQUE INDEX sys_config_config_key (config_key)
-)
+)ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4 comment ='配置表';
