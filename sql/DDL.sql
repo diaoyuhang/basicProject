@@ -1,10 +1,10 @@
 CREATE
-DATABASE basic
+DATABASE nature
     CHARACTER SET utf8mb4
     COLLATE utf8mb4_general_ci;
 
 use
-basic;
+nature;
 CREATE TABLE user
 (
     id            BIGINT AUTO_INCREMENT PRIMARY KEY comment '主键',
@@ -191,17 +191,108 @@ create table core_user
 
 create table sys_config
 (
-    id    bigint auto_increment comment '主键'
+    id          bigint auto_increment comment '主键'
         primary key,
-    config_key   varchar(32) not null comment '配置key',
-    value text        not null comment '配置内容',
-    creator_id   bigint                                 not null comment '创建人用户id',
-    editor_id    bigint                                 not null comment '修改人用户id',
-    create_time  datetime                               not null comment '创建时间',
-    edit_time    datetime                               not null comment '编辑时间',
-    creator      varchar(32)                            not null comment '创建人',
-    editor       varchar(32)                            not null comment '修改人',
-    rec_time     timestamp    default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP comment '时间戳',
+    config_key  varchar(32)                         not null comment '配置key',
+    value       text                                not null comment '配置内容',
+    creator_id  bigint                              not null comment '创建人用户id',
+    editor_id   bigint                              not null comment '修改人用户id',
+    create_time datetime                            not null comment '创建时间',
+    edit_time   datetime                            not null comment '编辑时间',
+    creator     varchar(32)                         not null comment '创建人',
+    editor      varchar(32)                         not null comment '修改人',
+    rec_time    timestamp default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP comment '时间戳',
     UNIQUE INDEX sys_config_config_key (config_key)
 )ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 comment ='配置表';
+
+create table massage_class
+(
+    id          bigint auto_increment comment '主键'
+        primary key,
+    title       varchar(32)                            not null comment '分类名称',
+    desc        varchar(128) default null comment '分类描述',
+    file_id     bigint                                 not null comment '封面图片',
+    creator_id  bigint                                 not null comment '创建人用户id',
+    editor_id   bigint                                 not null comment '修改人用户id',
+    create_time datetime                               not null comment '创建时间',
+    edit_time   datetime                               not null comment '编辑时间',
+    creator     varchar(32)                            not null comment '创建人',
+    editor      varchar(32)                            not null comment '修改人',
+    rec_time    timestamp    default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP comment '时间戳',
+    UNIQUE INDEX massage_class_title (title),
+    INDEX       massage_class_create_time (create_time),
+    INDEX       massage_class_edit_time (edit_time)
+)ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4 comment ='按摩分类';
+
+create table massage_project
+(
+    id               bigint auto_increment comment '主键'
+        primary key,
+    project_name     varchar(32)                            not null comment '项目名称',
+    project_desc     varchar(128) default null comment '分类描述',
+    massage_class_id bigint       default null comment '按摩分类id|massage_class.id',
+    duration         bigint                                 not null comment '按摩时长',
+    file_id          bigint                                 not null comment '封面图片',
+    creator_id       bigint                                 not null comment '创建人用户id',
+    editor_id        bigint                                 not null comment '修改人用户id',
+    create_time      datetime                               not null comment '创建时间',
+    edit_time        datetime                               not null comment '编辑时间',
+    creator          varchar(32)                            not null comment '创建人',
+    editor           varchar(32)                            not null comment '修改人',
+    rec_time         timestamp    default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP comment '时间戳',
+    UNIQUE INDEX massage_project_project_name (project_name),
+    INDEX            massage_project_create_time (create_time),
+    INDEX            massage_project_edit_time (edit_time)
+)ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4 comment ='按摩项目';
+
+create table massage_staff
+(
+    user_id     bigint                                 not null comment '主键，员工工号|user.id' primary key,
+    staff_desc  varchar(128) default null comment '从业人员描述',
+    score DOUBLE comment '评分',
+    creator_id  bigint                                 not null comment '创建人用户id',
+    editor_id   bigint                                 not null comment '修改人用户id',
+    create_time datetime                               not null comment '创建时间',
+    edit_time   datetime                               not null comment '编辑时间',
+    creator     varchar(32)                            not null comment '创建人',
+    editor      varchar(32)                            not null comment '修改人',
+    rec_time    timestamp    default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP comment '时间戳',
+    UNIQUE INDEX massage_staff_project_name (user_id),
+    INDEX       massage_staff_create_time (create_time),
+    INDEX       massage_staff_edit_time (edit_time)
+)ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4 comment ='按摩从业人员';
+
+create table massage_project_staff_relation
+(
+    id          bigint auto_increment comment '主键'
+        primary key,
+    staff_id    bigint                              not null comment '员工工号|massage_staff.user_id',
+    project_id  bigint                              not null comment '项目id|massage_project.id',
+    creator_id  bigint                              not null comment '创建人用户id',
+    editor_id   bigint                              not null comment '修改人用户id',
+    create_time datetime                            not null comment '创建时间',
+    edit_time   datetime                            not null comment '编辑时间',
+    creator     varchar(32)                         not null comment '创建人',
+    editor      varchar(32)                         not null comment '修改人',
+    rec_time    timestamp default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP comment '时间戳',
+    UNIQUE INDEX massage_project_staff_sid_pid (staff_id,project_id),
+    INDEX       massage_staff_create_time (create_time),
+    INDEX       massage_staff_edit_time (edit_time),
+    INDEX       massage_staff_project_id (project_id)
+)ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4 comment ='按摩从业人员与项目关联表';
+
+create table core_massage_reserve
+(
+    id           bigint auto_increment comment '主键'
+        primary key,
+    core_user_id bigint not null comment '用户id|core_user.id',
+    staff_id     bigint not null comment '员工工号|massage_staff.user_id',
+    project_id   bigint not null comment '项目id|massage_project.id',
+    reserve_time
+)ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4 comment ='客户预约表';
