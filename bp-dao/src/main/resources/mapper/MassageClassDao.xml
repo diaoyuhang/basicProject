@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.basicproject.dao.MassageClassDao">
+    <resultMap id="BaseResultMap" type="com.example.basicproject.domain.MassageClass">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="file_id" jdbcType="BIGINT" property="fileId"/>
+        <result column="state" jdbcType="INTEGER" property="state"/>
+        <result column="creator_id" jdbcType="BIGINT" property="creatorId"/>
+        <result column="editor_id" jdbcType="BIGINT" property="editorId"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="edit_time" jdbcType="TIMESTAMP" property="editTime"/>
+        <result column="creator" jdbcType="VARCHAR" property="creator"/>
+        <result column="editor" jdbcType="VARCHAR" property="editor"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id
+        , title, description, file_id,state, creator_id, editor_id, create_time, edit_time, creator,
+    editor
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from massage_class
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByMassageClass" resultType="com.example.basicproject.domain.MassageClass">
+        select
+        <include refid="Base_Column_List"/>
+        from massage_class
+        where
+        where
+        <trim suffixOverrides="and">
+            1=1 and
+            <if test="title != null and title!=''">
+                title = #{title,jdbcType=VARCHAR} and
+            </if>
+            <if test="state != null and state!=''">
+                state = #{state,jdbcType=INTEGER} and
+            </if>
+
+        </trim>
+
+        <choose>
+            <when test="sortField != null and sortOrder != null and sortField == 'createTime'">
+                ORDER BY
+                create_time
+                ${sortOrder}
+            </when>
+
+            <when test="sortField != null and sortOrder != null and sortField == 'editTime'">
+                ORDER BY
+                edit_time
+                ${sortOrder}
+            </when>
+
+            <otherwise>
+                ORDER BY id ASC
+            </otherwise>
+        </choose>
+
+    </select>
+    <select id="selectByTitle" resultType="com.example.basicproject.domain.MassageClass">
+        select
+        <include refid="Base_Column_List"/>
+        from massage_class
+        where title = #{title,jdbcType=VARCHAR}
+
+    </select>
+
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.example.basicproject.domain.MassageClass"
+            useGeneratedKeys="true">
+        insert into massage_class (title, description, file_id,state,
+                                   creator_id, editor_id, create_time,
+                                   edit_time, creator, editor)
+        values (#{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{fileId,jdbcType=BIGINT},#{state,jdbcType=BIGINT},
+                #{creatorId,jdbcType=BIGINT}, #{editorId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP},
+                #{editTime,jdbcType=TIMESTAMP}, #{creator,jdbcType=VARCHAR}, #{editor,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id"
+            parameterType="com.example.basicproject.domain.MassageClass" useGeneratedKeys="true">
+        insert into massage_class
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="title != null">
+                title,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+            <if test="fileId != null">
+                file_id,
+            </if>
+            <if test="state != null">
+                state,
+            </if>
+            <if test="creatorId != null">
+                creator_id,
+            </if>
+            <if test="editorId != null">
+                editor_id,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="editTime != null">
+                edit_time,
+            </if>
+            <if test="creator != null">
+                creator,
+            </if>
+            <if test="editor != null">
+                editor,
+            </if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="fileId != null">
+                #{fileId,jdbcType=BIGINT},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=BIGINT},
+            </if>
+            <if test="creatorId != null">
+                #{creatorId,jdbcType=BIGINT},
+            </if>
+            <if test="editorId != null">
+                #{editorId,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="editTime != null">
+                #{editTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="creator != null">
+                #{creator,jdbcType=VARCHAR},
+            </if>
+            <if test="editor != null">
+                #{editor,jdbcType=VARCHAR},
+            </if>
+            <if test="recTime != null">
+                #{recTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.example.basicproject.domain.MassageClass">
+        update massage_class
+        <set>
+            <if test="title != null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                description = #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="fileId != null">
+                file_id = #{fileId,jdbcType=BIGINT},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=BIGINT},
+            </if>
+            <if test="creatorId != null">
+                creator_id = #{creatorId,jdbcType=BIGINT},
+            </if>
+            <if test="editorId != null">
+                editor_id = #{editorId,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="editTime != null">
+                edit_time = #{editTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="creator != null">
+                creator = #{creator,jdbcType=VARCHAR},
+            </if>
+            <if test="editor != null">
+                editor = #{editor,jdbcType=VARCHAR},
+            </if>
+
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.example.basicproject.domain.MassageClass">
+        update massage_class
+        set title       = #{title,jdbcType=VARCHAR},
+            description = #{description,jdbcType=VARCHAR},
+            file_id     = #{fileId,jdbcType=BIGINT},
+            state     = #{state,jdbcType=BIGINT},
+            creator_id  = #{creatorId,jdbcType=BIGINT},
+            editor_id   = #{editorId,jdbcType=BIGINT},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            edit_time   = #{editTime,jdbcType=TIMESTAMP},
+            creator     = #{creator,jdbcType=VARCHAR},
+            editor      = #{editor,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.basicproject.dao.CoreMassageReserveDao">
+  <resultMap id="BaseResultMap" type="com.example.basicproject.domain.CoreMassageReserve">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="core_user_id" jdbcType="BIGINT" property="coreUserId" />
+    <result column="staff_id" jdbcType="BIGINT" property="staffId" />
+    <result column="project_id" jdbcType="BIGINT" property="projectId" />
+    <result column="reserve_time" jdbcType="TIMESTAMP" property="reserveTime" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="creator_id" jdbcType="BIGINT" property="creatorId" />
+    <result column="editor_id" jdbcType="BIGINT" property="editorId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="edit_time" jdbcType="TIMESTAMP" property="editTime" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="editor" jdbcType="VARCHAR" property="editor" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, core_user_id, staff_id, project_id, reserve_time, `state`, creator_id, editor_id, 
+    create_time, edit_time, creator, editor
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from core_massage_reserve
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from core_massage_reserve
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.example.basicproject.domain.CoreMassageReserve" useGeneratedKeys="true">
+    insert into core_massage_reserve (core_user_id, staff_id, project_id, 
+      reserve_time, `state`, creator_id, 
+      editor_id, create_time, edit_time, 
+      creator, editor
+      )
+    values (#{coreUserId,jdbcType=BIGINT}, #{staffId,jdbcType=BIGINT}, #{projectId,jdbcType=BIGINT}, 
+      #{reserveTime,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER}, #{creatorId,jdbcType=BIGINT}, 
+      #{editorId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{editTime,jdbcType=TIMESTAMP}, 
+      #{creator,jdbcType=VARCHAR}, #{editor,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.example.basicproject.domain.CoreMassageReserve" useGeneratedKeys="true">
+    insert into core_massage_reserve
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="coreUserId != null">
+        core_user_id,
+      </if>
+      <if test="staffId != null">
+        staff_id,
+      </if>
+      <if test="projectId != null">
+        project_id,
+      </if>
+      <if test="reserveTime != null">
+        reserve_time,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+      <if test="creatorId != null">
+        creator_id,
+      </if>
+      <if test="editorId != null">
+        editor_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="editTime != null">
+        edit_time,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="editor != null">
+        editor,
+      </if>
+
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="coreUserId != null">
+        #{coreUserId,jdbcType=BIGINT},
+      </if>
+      <if test="staffId != null">
+        #{staffId,jdbcType=BIGINT},
+      </if>
+      <if test="projectId != null">
+        #{projectId,jdbcType=BIGINT},
+      </if>
+      <if test="reserveTime != null">
+        #{reserveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="creatorId != null">
+        #{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="editorId != null">
+        #{editorId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="editTime != null">
+        #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="editor != null">
+        #{editor,jdbcType=VARCHAR},
+      </if>
+
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.basicproject.domain.CoreMassageReserve">
+    update core_massage_reserve
+    <set>
+      <if test="coreUserId != null">
+        core_user_id = #{coreUserId,jdbcType=BIGINT},
+      </if>
+      <if test="staffId != null">
+        staff_id = #{staffId,jdbcType=BIGINT},
+      </if>
+      <if test="projectId != null">
+        project_id = #{projectId,jdbcType=BIGINT},
+      </if>
+      <if test="reserveTime != null">
+        reserve_time = #{reserveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null">
+        `state` = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="creatorId != null">
+        creator_id = #{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="editorId != null">
+        editor_id = #{editorId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="editTime != null">
+        edit_time = #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="editor != null">
+        editor = #{editor,jdbcType=VARCHAR},
+      </if>
+
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.basicproject.domain.CoreMassageReserve">
+    update core_massage_reserve
+    set core_user_id = #{coreUserId,jdbcType=BIGINT},
+      staff_id = #{staffId,jdbcType=BIGINT},
+      project_id = #{projectId,jdbcType=BIGINT},
+      reserve_time = #{reserveTime,jdbcType=TIMESTAMP},
+      `state` = #{state,jdbcType=INTEGER},
+      creator_id = #{creatorId,jdbcType=BIGINT},
+      editor_id = #{editorId,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      edit_time = #{editTime,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=VARCHAR},
+      editor = #{editor,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

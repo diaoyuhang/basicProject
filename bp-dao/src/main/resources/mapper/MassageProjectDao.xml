@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.basicproject.dao.MassageProjectDao">
+  <resultMap id="BaseResultMap" type="com.example.basicproject.domain.MassageProject">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="project_name" jdbcType="VARCHAR" property="projectName" />
+    <result column="project_desc" jdbcType="VARCHAR" property="projectDesc" />
+    <result column="massage_class_id" jdbcType="BIGINT" property="massageClassId" />
+    <result column="duration" jdbcType="BIGINT" property="duration" />
+    <result column="file_id" jdbcType="BIGINT" property="fileId" />
+    <result column="creator_id" jdbcType="BIGINT" property="creatorId" />
+    <result column="editor_id" jdbcType="BIGINT" property="editorId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="edit_time" jdbcType="TIMESTAMP" property="editTime" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="editor" jdbcType="VARCHAR" property="editor" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, project_name, project_desc, massage_class_id, duration, file_id, creator_id, 
+    editor_id, create_time, edit_time, creator, editor
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from massage_project
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from massage_project
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.example.basicproject.domain.MassageProject" useGeneratedKeys="true">
+    insert into massage_project (project_name, project_desc, massage_class_id, 
+      duration, file_id, creator_id, 
+      editor_id, create_time, edit_time, 
+      creator, editor
+      )
+    values (#{projectName,jdbcType=VARCHAR}, #{projectDesc,jdbcType=VARCHAR}, #{massageClassId,jdbcType=BIGINT}, 
+      #{duration,jdbcType=BIGINT}, #{fileId,jdbcType=BIGINT}, #{creatorId,jdbcType=BIGINT}, 
+      #{editorId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{editTime,jdbcType=TIMESTAMP}, 
+      #{creator,jdbcType=VARCHAR}, #{editor,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.example.basicproject.domain.MassageProject" useGeneratedKeys="true">
+    insert into massage_project
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="projectName != null">
+        project_name,
+      </if>
+      <if test="projectDesc != null">
+        project_desc,
+      </if>
+      <if test="massageClassId != null">
+        massage_class_id,
+      </if>
+      <if test="duration != null">
+        duration,
+      </if>
+      <if test="fileId != null">
+        file_id,
+      </if>
+      <if test="creatorId != null">
+        creator_id,
+      </if>
+      <if test="editorId != null">
+        editor_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="editTime != null">
+        edit_time,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="editor != null">
+        editor,
+      </if>
+
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="projectName != null">
+        #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectDesc != null">
+        #{projectDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="massageClassId != null">
+        #{massageClassId,jdbcType=BIGINT},
+      </if>
+      <if test="duration != null">
+        #{duration,jdbcType=BIGINT},
+      </if>
+      <if test="fileId != null">
+        #{fileId,jdbcType=BIGINT},
+      </if>
+      <if test="creatorId != null">
+        #{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="editorId != null">
+        #{editorId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="editTime != null">
+        #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="editor != null">
+        #{editor,jdbcType=VARCHAR},
+      </if>
+      <if test="recTime != null">
+        #{recTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.basicproject.domain.MassageProject">
+    update massage_project
+    <set>
+      <if test="projectName != null">
+        project_name = #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectDesc != null">
+        project_desc = #{projectDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="massageClassId != null">
+        massage_class_id = #{massageClassId,jdbcType=BIGINT},
+      </if>
+      <if test="duration != null">
+        duration = #{duration,jdbcType=BIGINT},
+      </if>
+      <if test="fileId != null">
+        file_id = #{fileId,jdbcType=BIGINT},
+      </if>
+      <if test="creatorId != null">
+        creator_id = #{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="editorId != null">
+        editor_id = #{editorId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="editTime != null">
+        edit_time = #{editTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="editor != null">
+        editor = #{editor,jdbcType=VARCHAR},
+      </if>
+
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.basicproject.domain.MassageProject">
+    update massage_project
+    set project_name = #{projectName,jdbcType=VARCHAR},
+      project_desc = #{projectDesc,jdbcType=VARCHAR},
+      massage_class_id = #{massageClassId,jdbcType=BIGINT},
+      duration = #{duration,jdbcType=BIGINT},
+      file_id = #{fileId,jdbcType=BIGINT},
+      creator_id = #{creatorId,jdbcType=BIGINT},
+      editor_id = #{editorId,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      edit_time = #{editTime,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=VARCHAR},
+      editor = #{editor,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
