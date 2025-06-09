@@ -188,3 +188,19 @@ create table core_user
     UNIQUE INDEX user_open_id (open_id)
 )ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 comment ='前台用户';
+
+create table sys_config
+(
+    id    bigint auto_increment comment '主键'
+        primary key,
+    config_key   varchar(32) not null comment '配置key',
+    value text        not null comment '配置内容',
+    creator_id   bigint                                 not null comment '创建人用户id',
+    editor_id    bigint                                 not null comment '修改人用户id',
+    create_time  datetime                               not null comment '创建时间',
+    edit_time    datetime                               not null comment '编辑时间',
+    creator      varchar(32)                            not null comment '创建人',
+    editor       varchar(32)                            not null comment '修改人',
+    rec_time     timestamp    default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP comment '时间戳',
+    UNIQUE INDEX sys_config_config_key (config_key)
+)
